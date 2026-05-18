@@ -768,39 +768,39 @@ st.markdown('</div>', unsafe_allow_html=True)
 with st.sidebar:
     st.markdown('<div class="sidebar-spacer"></div>', unsafe_allow_html=True)
 
-st.markdown(
-    """
-    <div class="channel-status-card">
-        <div class="sidebar-section-title">CANAL AL DÍA</div>
+    st.markdown(
+        """
+        <div class="channel-status-card">
+            <div class="sidebar-section-title">CANAL AL DÍA</div>
 
-        <div class="channel-row">
-            <span>Videos</span>
-            <b>299</b>
-        </div>
+            <div class="channel-row">
+                <span>Videos</span>
+                <b>299</b>
+            </div>
 
-        <div class="channel-row">
-            <span>Views totales</span>
-            <b>16.7M</b>
-        </div>
+            <div class="channel-row">
+                <span>Views totales</span>
+                <b>16.7M</b>
+            </div>
 
-        <div class="channel-row">
-            <span>Likes totales</span>
-            <b>716K</b>
-        </div>
+            <div class="channel-row">
+                <span>Likes totales</span>
+                <b>716K</b>
+            </div>
 
-        <div class="channel-row">
-            <span>Comentarios</span>
-            <b>34.8K</b>
-        </div>
+            <div class="channel-row">
+                <span>Comentarios</span>
+                <b>34.8K</b>
+            </div>
 
-        <div class="channel-row">
-            <span>Estado del agente</span>
-            <b class="agent-active">● Activo</b>
+            <div class="channel-row">
+                <span>Estado del agente</span>
+                <b class="agent-active">● Activo</b>
+            </div>
         </div>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+        """,
+        unsafe_allow_html=True
+    )
 
     st.markdown('<div class="sidebar-divider"></div>', unsafe_allow_html=True)
 
@@ -813,12 +813,12 @@ st.markdown(
                 st.success("✅ Conexión exitosa")
 
                 st.markdown(f"""
-                    <div class="connection-info">
-                        <p><b>Tabla:</b> <code>{info["tabla"]}</code></p>
-                        <p><b>Filas:</b> <code>{info["filas"]}</code></p>
-                        <p><b>Columnas:</b> <code>{info["columnas"]}</code></p>
-                    </div>
-                    """, unsafe_allow_html=True)
+                <div class="connection-info">
+                    <p><b>Tabla:</b> <code>{info["tabla"]}</code></p>
+                    <p><b>Filas:</b> <code>{info["filas"]}</code></p>
+                    <p><b>Columnas:</b> <code>{info["columnas"]}</code></p>
+                </div>
+                """, unsafe_allow_html=True)
 
             except Exception as e:
                 st.error("❌ No se pudo conectar con BigQuery.")
