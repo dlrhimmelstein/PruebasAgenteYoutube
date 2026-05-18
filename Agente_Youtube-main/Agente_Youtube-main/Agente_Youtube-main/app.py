@@ -376,6 +376,43 @@ st.markdown(
     }
 
     /* =========================
+       CANAL AL DÍA - SIDEBAR
+    ========================= */
+    
+    .sidebar-spacer {
+        height: 7rem;
+    }
+    
+    .channel-status-card {
+        border-top: 1px solid #dddddd;
+        padding-top: 0.9rem;
+        margin-top: 1rem;
+    }
+    
+    .channel-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    
+        font-size: 0.78rem;
+        margin-bottom: 0.65rem;
+    }
+    
+    .channel-row span {
+        color: #8a8a8a !important;
+        font-weight: 500;
+    }
+    
+    .channel-row b {
+        color: #0f0f0f !important;
+        font-weight: 700;
+    }
+    
+    .agent-active {
+        color: #e60023 !important;
+    }
+
+    /* =========================
        WELCOME CARD
     ========================= */
     
@@ -729,32 +766,41 @@ st.markdown('</div>', unsafe_allow_html=True)
 # =========================
 
 with st.sidebar:
-    st.markdown(
-        """
-        <div class="sidebar-title">
-            <span class="sidebar-logo">▶</span>
-            <div>
-                <div class="sidebar-main-title">Las Damitas Histeria</div>
-                <div class="sidebar-subtitle">Agente YouTube Analytics</div>
-            </div>
+    st.markdown('<div class="sidebar-spacer"></div>', unsafe_allow_html=True)
+
+st.markdown(
+    """
+    <div class="channel-status-card">
+        <div class="sidebar-section-title">CANAL AL DÍA</div>
+
+        <div class="channel-row">
+            <span>Videos</span>
+            <b>299</b>
         </div>
-        """,
-        unsafe_allow_html=True
-    )
 
-    st.markdown('<div class="sidebar-section-title">ACCESOS RÁPIDOS</div>', unsafe_allow_html=True)
+        <div class="channel-row">
+            <span>Views totales</span>
+            <b>16.7M</b>
+        </div>
 
-    st.markdown(
-        """
-        <div class="sidebar-item">🏆 <span>Top videos</span><small>Ranking por vistas</small></div>
-        <div class="sidebar-item">📅 <span>Mejor día para publicar</span><small>Análisis de rendimiento</small></div>
-        <div class="sidebar-item">🎯 <span>Temas más exitosos</span><small>Por engagement</small></div>
-        <div class="sidebar-item">📈 <span>Resumen del canal</span><small>Stats generales</small></div>
-        <div class="sidebar-item">🎬 <span>Formatos que funcionan</span><small>Shorts vs podcasts</small></div>
-        <div class="sidebar-item">💗 <span>Mayor engagement</span><small>Likes y comentarios</small></div>
-        """,
-        unsafe_allow_html=True
-    )
+        <div class="channel-row">
+            <span>Likes totales</span>
+            <b>716K</b>
+        </div>
+
+        <div class="channel-row">
+            <span>Comentarios</span>
+            <b>34.8K</b>
+        </div>
+
+        <div class="channel-row">
+            <span>Estado del agente</span>
+            <b class="agent-active">● Activo</b>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
     st.markdown('<div class="sidebar-divider"></div>', unsafe_allow_html=True)
 
