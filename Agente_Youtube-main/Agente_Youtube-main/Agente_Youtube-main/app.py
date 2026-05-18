@@ -225,7 +225,7 @@ with st.sidebar:
     <style>
 
     section[data-testid="stSidebar"] {
-        background: #1f1f2e;
+        background: #ADAAAA;
         border-right: 1px solid #2b2b3d;
     }
 
