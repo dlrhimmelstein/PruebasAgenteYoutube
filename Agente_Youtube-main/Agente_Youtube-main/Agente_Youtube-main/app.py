@@ -257,8 +257,8 @@ st.markdown(
         visibility: hidden;
     }
 
-    /* =========================
-       SIDEBAR TIPO YOUTUBE
+   /* =========================
+       SIDEBAR TIPO YOUTUBE COMPACTO
     ========================= */
     
     [data-testid="stSidebar"] {
@@ -266,58 +266,59 @@ st.markdown(
     }
     
     [data-testid="stSidebar"] > div:first-child {
-        padding-top: 1rem;
+        padding-top: 0.35rem !important;
+        padding-bottom: 0.35rem !important;
     }
     
     .sidebar-title {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
-        margin-bottom: 1.4rem;
+        gap: 0.6rem;
+        margin-bottom: 0.65rem !important;
     }
     
     .sidebar-logo {
-        width: 34px;
-        height: 34px;
+        width: 30px !important;
+        height: 30px !important;
         border-radius: 8px;
         background: #ff0000;
         color: white;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-size: 0.85rem;
+        font-size: 0.78rem;
         font-weight: 800;
     }
     
     .sidebar-main-title {
-        font-size: 0.95rem;
+        font-size: 0.86rem !important;
         font-weight: 800;
         color: #0f0f0f;
     }
     
     .sidebar-subtitle {
-        font-size: 0.72rem;
+        font-size: 0.65rem !important;
         color: #8a8a8a;
     }
     
     .sidebar-section-title {
-        font-size: 0.68rem;
+        font-size: 0.61rem !important;
         font-weight: 800;
         color: #9ca3af;
         letter-spacing: 0.08rem;
-        margin: 1rem 0 0.7rem 0;
+        margin: 0.42rem 0 0.28rem 0 !important;
     }
     
     .sidebar-item {
         background: transparent;
-        border-radius: 12px;
-        padding: 0.6rem 0.55rem;
-        margin-bottom: 0.25rem;
+        border-radius: 10px;
+        padding: 0.30rem 0.35rem !important;
+        margin-bottom: 0.03rem !important;
         color: #0f0f0f;
-        font-size: 0.82rem;
+        font-size: 0.72rem !important;
         display: grid;
-        grid-template-columns: 28px 1fr;
-        column-gap: 0.45rem;
+        grid-template-columns: 23px 1fr !important;
+        column-gap: 0.35rem;
         align-items: center;
     }
     
@@ -332,70 +333,32 @@ st.markdown(
     .sidebar-item small {
         grid-column: 2;
         color: #8a8a8a;
-        font-size: 0.72rem;
-        margin-top: -0.1rem;
+        font-size: 0.62rem !important;
+        margin-top: -0.12rem;
     }
     
     .sidebar-divider {
         height: 1px;
         background: #dddddd;
-        margin: 1rem 0;
+        margin: 0.42rem 0 !important;
     }
-    
-    .data-card {
-        background: #ffffff;
-        border: 1px solid #e5e7eb;
-        border-radius: 14px;
-        padding: 0.75rem;
-        font-size: 0.78rem;
-        color: #0f0f0f;
-    }
-    
-    .data-card div {
-        display: flex;
-        flex-direction: column;
-        gap: 0.15rem;
-        margin-bottom: 0.55rem;
-    }
-    
-    .data-card div:last-child {
-        margin-bottom: 0;
-    }
-    
-    .data-card b {
-        color: #6b7280;
-        font-size: 0.7rem;
-    }
-    
-    .data-card span {
-        font-family: monospace;
-        background: #f3f4f6;
-        padding: 0.15rem 0.35rem;
-        border-radius: 6px;
-        color: #059669;
-    }
-
-    /* =========================
-       CANAL AL DÍA - SIDEBAR
-    ========================= */
     
     .sidebar-spacer {
-        height: 1.5rem;
+        height: 0.2rem !important;
     }
     
     .channel-status-card {
         border-top: 1px solid #dddddd;
-        padding-top: 0.9rem;
-        margin-top: 1rem;
+        padding-top: 0.45rem !important;
+        margin-top: 0.3rem !important;
     }
     
     .channel-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-    
-        font-size: 0.78rem;
-        margin-bottom: 0.65rem;
+        font-size: 0.70rem !important;
+        margin-bottom: 0.24rem !important;
     }
     
     .channel-row span {
@@ -411,40 +374,12 @@ st.markdown(
     .agent-active {
         color: #e60023 !important;
     }
-
-    /* =========================
-       SIDEBAR SIN SCROLL
-    ========================= */
-    
-    [data-testid="stSidebar"] > div:first-child {
-        padding-top: 0.6rem !important;
-        padding-bottom: 0.5rem !important;
-    }
-    
-    .sidebar-item {
-        padding: 0.45rem 0.45rem !important;
-        margin-bottom: 0.12rem !important;
-    }
-    
-    .sidebar-section-title {
-        margin: 0.7rem 0 0.45rem 0 !important;
-    }
-    
-    .sidebar-divider {
-        margin: 0.7rem 0 !important;
-    }
-    
-    .channel-row {
-        margin-bottom: 0.4rem !important;
-    }
-    
-    .sidebar-spacer {
-        height: 2rem !important;
-    }
     
     .stButton > button {
-        padding-top: 0.38rem !important;
-        padding-bottom: 0.38rem !important;
+        min-height: 32px !important;
+        padding-top: 0.25rem !important;
+        padding-bottom: 0.25rem !important;
+        font-size: 0.78rem !important;
     }
 
     /* =========================
