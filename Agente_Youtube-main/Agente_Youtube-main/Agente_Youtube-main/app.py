@@ -169,86 +169,52 @@ st.markdown("""
 <style>
 .youtube-header {
     background: #ffffff;
-    border: 1px solid #e5e5e5;
-    border-radius: 18px;
-    padding: 18px 22px;
-    margin-bottom: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    border-radius: 20px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
     box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-}
-
-.youtube-left {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 18px;
 }
 
 .youtube-logo {
-    width: 48px;
-    height: 34px;
+    width: 42px;
+    height: 30px;
     background: #ff0000;
-    border-radius: 10px;
+    border-radius: 9px;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
     font-size: 18px;
-    font-weight: 800;
 }
 
 .youtube-title {
-    font-size: 24px;
-    font-weight: 800;
     color: #0f0f0f;
-    margin-bottom: 2px;
+    font-size: 25px;
+    font-weight: 800;
 }
 
 .youtube-subtitle {
-    font-size: 14px;
     color: #606060;
-}
-
-.youtube-right {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.youtube-pill {
-    background: #f2f2f2;
-    border-radius: 999px;
-    padding: 8px 14px;
-    font-size: 13px;
-    color: #0f0f0f;
-    font-weight: 600;
-}
-
-.youtube-live {
-    background: #e6f4ea;
-    color: #137333;
+    font-size: 14px;
+    margin-top: 4px;
 }
 </style>
 
 <div class="youtube-header">
-    <div class="youtube-left">
-        <div class="youtube-logo">▶</div>
-        <div>
-            <div class="youtube-title">Agente YouTube Analytics</div>
-            <div class="youtube-subtitle">
-                Consulta métricas, videos, temas y rendimiento del canal con Gemini + BigQuery
-            </div>
+    <div class="youtube-logo">▶</div>
+    <div>
+        <div class="youtube-title">Agente YouTube Analytics</div>
+        <div class="youtube-subtitle">
+            Consulta métricas, videos, temas y rendimiento del canal con Gemini + BigQuery
         </div>
-    </div>
-
-    <div class="youtube-right">
-        <div class="youtube-pill youtube-live">● Gemini conectado</div>
-        <div class="youtube-pill">📊 299 videos</div>
-        <div class="youtube-pill">▶ YouTube</div>
     </div>
 </div>
 """, unsafe_allow_html=True)
+
+
 # =========================
 # 6. SIDEBAR
 # =========================
