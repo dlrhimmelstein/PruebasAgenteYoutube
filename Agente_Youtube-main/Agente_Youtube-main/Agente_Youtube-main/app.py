@@ -80,7 +80,7 @@ st.markdown(
     ========================= */
 
     .block-container {
-        padding-top: 1.2rem;
+        padding-top: 0rem;
         padding-bottom: 6rem;
         padding-left: 2rem;
         padding-right: 2rem;
@@ -113,7 +113,7 @@ st.markdown(
         padding: 0 1.2rem;
 
         margin:
-            -1.2rem
+            0rem
             -2rem
             1.5rem
             -2rem;
@@ -254,7 +254,7 @@ st.markdown(
     }
 
     header {
-        visibility: hidden;
+        display: none !important;
     }
 
    /* =========================
