@@ -232,6 +232,93 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+
+# =========================
+# BARRA DE FILTROS
+# (va justo después del encabezado y antes del chat)
+# =========================
+
+st.markdown("""
+<style>
+.yt-filters-label {
+    font-size: 13px;
+    color: #888;
+    font-weight: 500;
+    margin-right: 10px;
+    white-space: nowrap;
+}
+.yt-filters-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 0 16px 0;
+    border-bottom: 1px solid #efefef;
+    margin-bottom: 16px;
+}
+.yt-filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 13px;
+    border-radius: 20px;
+    border: 1px solid #e0e0e0;
+    background: #fafafa;
+    font-size: 12px;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.15s, border 0.15s;
+    white-space: nowrap;
+    font-family: 'Segoe UI', sans-serif;
+}
+.yt-filter-chip:hover {
+    background: #f0f0f0;
+    border-color: #ccc;
+}
+.yt-filter-chip.active {
+    background: #0f0f0f;
+    color: white;
+    border-color: #0f0f0f;
+}
+</style>
+
+<div class="yt-filters-row">
+    <span class="yt-filters-label">Filtrar:</span>
+    <span class="yt-filter-chip">📱 Shorts</span>
+    <span class="yt-filter-chip">🎙️ Podcasts</span>
+    <span class="yt-filter-chip">📅 2024</span>
+    <span class="yt-filter-chip">📅 2023</span>
+    <span class="yt-filter-chip">⚡ Videos cortos</span>
+    <span class="yt-filter-chip">⏱️ Videos largos</span>
+    <span class="yt-filter-chip">💬 Comentarios</span>
+</div>
+""", unsafe_allow_html=True)
+
+
+# ── Filtros funcionales con st.pills ──────────────────────────────────────
+# st.pills renderiza chips nativos de Streamlit que sí disparan eventos.
+# Lo ponemos justo debajo del HTML visual para que el usuario lo use.
+
+filtro_activo = st.pills(
+    label="",           # sin label, el HTML de arriba ya lo tiene
+    options=["Shorts", "Podcasts", "2024", "2023", "Videos cortos", "Videos largos", "Comentarios"],
+    selection_mode="multi",
+    key="filtros_canal",
+    label_visibility="collapsed"
+)
+
+# filtro_activo es una lista con los chips seleccionados.
+# Úsala donde construyas el prompt o donde filtres los resultados, por ejemplo:
+
+if filtro_activo:
+    contexto_filtros = f"Filtra la respuesta considerando solo: {', '.join(filtro_activo)}."
+else:
+    contexto_filtros = ""
+
+# Luego, cuando construyas el prompt para el agente, agrégalo así:
+# prompt_final = f"{contexto_filtros} {prompt}".strip()
+
+
 # =========================
 # SIDEBAR TIPO YOUTUBE
 # =========================
