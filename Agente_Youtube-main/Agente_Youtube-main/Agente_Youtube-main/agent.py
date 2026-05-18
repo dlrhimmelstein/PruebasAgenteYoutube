@@ -9,9 +9,6 @@ Original file is located at
 
 """#**INICIAL**"""
 
-from google.colab import auth, userdata
-auth.authenticate_user()
-
 PROJECT_ID = "mineria-datos-493000"
 DATASET_ID = "youtube"
 TABLE_NAME = "fact_final"
