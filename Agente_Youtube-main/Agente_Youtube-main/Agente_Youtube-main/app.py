@@ -380,7 +380,7 @@ st.markdown(
     ========================= */
     
     .sidebar-spacer {
-        height: 7rem;
+        height: 10rem;
     }
     
     .channel-status-card {
@@ -767,8 +767,45 @@ st.markdown('</div>', unsafe_allow_html=True)
 
 with st.sidebar:
 
+    # LOGO / TÍTULO
+    st.markdown(
+        '<div class="sidebar-title">'
+        '<span class="sidebar-logo">▶</span>'
+        '<div>'
+        '<div class="sidebar-main-title">Las Damitas Histeria</div>'
+        '<div class="sidebar-subtitle">Agente YouTube Analytics</div>'
+        '</div>'
+        '</div>',
+        unsafe_allow_html=True
+    )
+
+    # ACCESOS RÁPIDOS
+    st.markdown('<div class="sidebar-section-title">ACCESOS RÁPIDOS</div>', unsafe_allow_html=True)
+
+    st.markdown(
+        '<div class="sidebar-item">🏆 <span>Top videos</span><small>Ranking por vistas</small></div>'
+        '<div class="sidebar-item">📅 <span>Mejor día para publicar</span><small>Análisis de rendimiento</small></div>'
+        '<div class="sidebar-item">🎯 <span>Temas más exitosos</span><small>Por engagement</small></div>'
+        '<div class="sidebar-item">📈 <span>Resumen del canal</span><small>Stats generales</small></div>'
+        '<div class="sidebar-item">🎬 <span>Formatos que funcionan</span><small>Shorts vs podcasts</small></div>'
+        '<div class="sidebar-item">💗 <span>Mayor engagement</span><small>Likes y comentarios</small></div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown('<div class="sidebar-divider"></div>', unsafe_allow_html=True)
+
+    # BUSCAR VIDEO
+    st.markdown('<div class="sidebar-section-title">BUSCAR VIDEO</div>', unsafe_allow_html=True)
+
+    st.markdown(
+        '<div class="sidebar-item">🔍 <span>Buscar por tema</span><small>¿En qué ep hablaron de X?</small></div>'
+        '<div class="sidebar-item">🎥 <span>Analizar video</span><small>Por título o URL</small></div>',
+        unsafe_allow_html=True
+    )
+
     st.markdown('<div class="sidebar-spacer"></div>', unsafe_allow_html=True)
 
+    # CANAL AL DÍA
     st.markdown(
         '<div class="channel-status-card">'
         '<div class="sidebar-section-title">CANAL AL DÍA</div>'
@@ -783,6 +820,7 @@ with st.sidebar:
 
     st.markdown('<div class="sidebar-divider"></div>', unsafe_allow_html=True)
 
+    # PROBAR CONEXIÓN
     st.markdown('<div class="sidebar-section-title">PROBAR CONEXIÓN</div>', unsafe_allow_html=True)
 
     if st.button("Probar BigQuery", use_container_width=True):
@@ -808,7 +846,6 @@ with st.sidebar:
     if st.button("Limpiar conversación", use_container_width=True):
         st.session_state.messages = []
         st.rerun()
-
 
 # =========================
 # 7. MENSAJE INFORMATIVO
