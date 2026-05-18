@@ -601,6 +601,24 @@ st.markdown(
     border: none !important;
 }
 
+    /* Forzar fondo claro en la zona inferior */
+    [data-testid="stBottom"],
+    [data-testid="stBottom"] *,
+    [data-testid="stBottom"] > div,
+    [data-testid="stChatInput"],
+    [data-testid="stChatInput"] > div {
+        background-color: #f1f3f4 !important;
+        background: #f1f3f4 !important;
+    }
+    
+    /* Mantener el input blanco */
+    [data-baseweb="textarea"],
+    [data-baseweb="textarea"] *,
+    [data-baseweb="textarea"] textarea {
+        background-color: #ffffff !important;
+        background: #ffffff !important;
+    }
+
     /* =========================
        MENSAJES CHAT
     ========================= */
