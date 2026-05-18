@@ -171,14 +171,37 @@ st.markdown("""
 
 <style>
 
-.yt-topbar {
+/* Ocultar el header nativo de Streamlit */
+header[data-testid="stHeader"] {
+    display: none !important;
+}
+
+/* Quitar el padding superior del contenedor principal */
+.block-container {
+    padding-top: 0 !important;
+}
+
+/* El topbar se ancla arriba usando posición fija */
+.yt-topbar-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
     background: #ffffff;
     border-bottom: 1px solid #e5e5e5;
-    padding: 10px 20px;
+    padding: 10px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 0;
+    height: 56px;
+    box-sizing: border-box;
+}
+
+/* Espaciador para que el contenido no quede debajo del topbar fijo */
+.yt-topbar-spacer {
+    height: 56px;
+    width: 100%;
 }
 
 .yt-topbar-left {
@@ -199,8 +222,8 @@ st.markdown("""
 }
 .yt-topbar-logo svg { width: 17px; height: 17px; fill: white; }
 
-.yt-topbar-channel { font-size: 13px; font-weight: 600; color: #111; line-height: 1.3; }
-.yt-topbar-powered  { font-size: 11px; color: #888; line-height: 1.3; }
+.yt-topbar-channel { font-size: 13px; font-weight: 600; color: #111; line-height: 1.3; font-family: 'Segoe UI', sans-serif; }
+.yt-topbar-powered  { font-size: 11px; color: #888; line-height: 1.3; font-family: 'Segoe UI', sans-serif; }
 
 .yt-topbar-right {
     display: flex;
@@ -219,18 +242,15 @@ st.markdown("""
     color: #444;
     background: #fafafa;
     white-space: nowrap;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-.yt-topbar-pill .dot-green {
+.dot-green {
     width: 7px; height: 7px;
     border-radius: 50%;
     background: #22c55e;
     display: inline-block;
     flex-shrink: 0;
-}
-
-.yt-topbar-pill-icon {
-    font-size: 14px;
 }
 
 .yt-topbar-clear {
@@ -243,8 +263,9 @@ st.markdown("""
     font-size: 12px;
     color: #444;
     background: #fafafa;
-    cursor: pointer;
     white-space: nowrap;
+    font-family: 'Segoe UI', sans-serif;
+    cursor: pointer;
 }
 .yt-topbar-clear:hover { background: #f0f0f0; }
 
@@ -253,20 +274,21 @@ st.markdown("""
     border-radius: 50%;
     background: #cc0000;
     color: white;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
     margin-left: 4px;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 </style>
 
-<div class="yt-topbar">
+<!-- TOPBAR FIJO -->
+<div class="yt-topbar-wrapper">
 
-    <!-- IZQUIERDA: logo + nombre -->
     <div class="yt-topbar-left">
         <div class="yt-topbar-logo">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -279,27 +301,25 @@ st.markdown("""
         </div>
     </div>
 
-    <!-- DERECHA: pills de estado + avatar -->
     <div class="yt-topbar-right">
         <div class="yt-topbar-pill">
             <span class="dot-green"></span>
             Gemini conectado
         </div>
         <div class="yt-topbar-pill">
-            <i class="ti ti-brand-youtube yt-topbar-pill-icon" style="color:#ff0000;"></i>
+            <i class="ti ti-brand-youtube" style="color:#ff0000; font-size:14px;"></i>
             299 videos
         </div>
-        <div class="yt-topbar-clear">
-            Limpiar chat
-        </div>
+        <div class="yt-topbar-clear">Limpiar chat</div>
         <div class="yt-topbar-avatar">LDH</div>
     </div>
 
 </div>
-""", unsafe_allow_html=True)
 
-# Botón invisible para limpiar chat (conecta con el HTML de arriba)
-# Puedes usar un st.button oculto o manejar limpiar desde el sidebar
+<!-- Espaciador para que el contenido no quede debajo del topbar -->
+<div class="yt-topbar-spacer"></div>
+
+""", unsafe_allow_html=True)
 
 
 # =========================
