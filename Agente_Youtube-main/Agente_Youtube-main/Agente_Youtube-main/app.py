@@ -528,30 +528,30 @@ st.markdown(
         color: #4b5563;
     }
 
-    /* =========================
-       CHAT INPUT
+   /* =========================
+       CHAT INPUT LIMPIO
     ========================= */
     
     [data-testid="stChatInput"] {
-        background: #ffffff !important;
-        border-top: 1px solid #e5e7eb !important;
-        padding: 0.9rem 2rem 1rem 2rem !important;
+        background: #f7f7f7 !important;
+        padding: 1rem 2rem !important;
     }
     
     [data-testid="stChatInput"] > div {
-        max-width: 1000px;
-        margin: 0 auto;
+        max-width: 980px !important;
+        margin: 0 auto !important;
         background: transparent !important;
     }
     
     [data-testid="stChatInput"] textarea {
+        width: 100% !important;
+        min-height: 48px !important;
+    
         background: #ffffff !important;
         color: #111827 !important;
     
         border: 1px solid #d1d5db !important;
         border-radius: 999px !important;
-    
-        min-height: 46px !important;
     
         padding: 0.75rem 1rem !important;
     
@@ -562,6 +562,12 @@ st.markdown(
     
     [data-testid="stChatInput"] textarea::placeholder {
         color: #9ca3af !important;
+    }
+    
+    [data-testid="stChatInput"] button {
+        background: #ff0000 !important;
+        color: white !important;
+        border-radius: 999px !important;
     }
     
     /* =========================
