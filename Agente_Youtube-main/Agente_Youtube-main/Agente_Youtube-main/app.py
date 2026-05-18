@@ -273,6 +273,124 @@ st.markdown(
         visibility: hidden;
     }
 
+    /* =========================
+       SIDEBAR TIPO YOUTUBE
+    ========================= */
+    
+    [data-testid="stSidebar"] {
+        background-color: #f2f2f2;
+    }
+    
+    [data-testid="stSidebar"] > div:first-child {
+        padding-top: 1rem;
+    }
+    
+    .sidebar-title {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.4rem;
+    }
+    
+    .sidebar-logo {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        background: #ff0000;
+        color: white;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        font-weight: 800;
+    }
+    
+    .sidebar-main-title {
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: #0f0f0f;
+    }
+    
+    .sidebar-subtitle {
+        font-size: 0.72rem;
+        color: #8a8a8a;
+    }
+    
+    .sidebar-section-title {
+        font-size: 0.68rem;
+        font-weight: 800;
+        color: #9ca3af;
+        letter-spacing: 0.08rem;
+        margin: 1rem 0 0.7rem 0;
+    }
+    
+    .sidebar-item {
+        background: transparent;
+        border-radius: 12px;
+        padding: 0.6rem 0.55rem;
+        margin-bottom: 0.25rem;
+        color: #0f0f0f;
+        font-size: 0.82rem;
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        column-gap: 0.45rem;
+        align-items: center;
+    }
+    
+    .sidebar-item:hover {
+        background: #e5e5e5;
+    }
+    
+    .sidebar-item span {
+        font-weight: 700;
+    }
+    
+    .sidebar-item small {
+        grid-column: 2;
+        color: #8a8a8a;
+        font-size: 0.72rem;
+        margin-top: -0.1rem;
+    }
+    
+    .sidebar-divider {
+        height: 1px;
+        background: #dddddd;
+        margin: 1rem 0;
+    }
+    
+    .data-card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 0.75rem;
+        font-size: 0.78rem;
+        color: #0f0f0f;
+    }
+    
+    .data-card div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+        margin-bottom: 0.55rem;
+    }
+    
+    .data-card div:last-child {
+        margin-bottom: 0;
+    }
+    
+    .data-card b {
+        color: #6b7280;
+        font-size: 0.7rem;
+    }
+    
+    .data-card span {
+        font-family: monospace;
+        background: #f3f4f6;
+        padding: 0.15rem 0.35rem;
+        border-radius: 6px;
+        color: #059669;
+    }
+
     </style>
     """,
     unsafe_allow_html=True
@@ -313,22 +431,53 @@ st.markdown('</div>', unsafe_allow_html=True)
 # =========================
 
 with st.sidebar:
-    st.title("⚙️ Panel del agente")
-
-    st.markdown("### Fuente de datos")
     st.markdown(
         """
-        **Proyecto:** `mineria-datos-493000`  
-        **Dataset:** `youtube`  
-        **Tabla:** `fact_final`
-        """
+        <div class="sidebar-title">
+            <span class="sidebar-logo">▶</span>
+            <div>
+                <div class="sidebar-main-title">Las Damitas Histeria</div>
+                <div class="sidebar-subtitle">Agente YouTube Analytics</div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
     )
 
-    st.markdown("---")
+    st.markdown('<div class="sidebar-section-title">ACCESOS RÁPIDOS</div>', unsafe_allow_html=True)
 
-    st.markdown("### Probar conexión")
+    st.markdown(
+        """
+        <div class="sidebar-item">🏆 <span>Top videos</span><small>Ranking por vistas</small></div>
+        <div class="sidebar-item">📅 <span>Mejor día para publicar</span><small>Análisis de rendimiento</small></div>
+        <div class="sidebar-item">🎯 <span>Temas más exitosos</span><small>Por engagement</small></div>
+        <div class="sidebar-item">📈 <span>Resumen del canal</span><small>Stats generales</small></div>
+        <div class="sidebar-item">🎬 <span>Formatos que funcionan</span><small>Shorts vs podcasts</small></div>
+        <div class="sidebar-item">💗 <span>Mayor engagement</span><small>Likes y comentarios</small></div>
+        """,
+        unsafe_allow_html=True
+    )
 
-    if st.button("Probar BigQuery"):
+    st.markdown('<div class="sidebar-divider"></div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="sidebar-section-title">FUENTE DE DATOS</div>', unsafe_allow_html=True)
+
+    st.markdown(
+        """
+        <div class="data-card">
+            <div><b>Proyecto</b><span>mineria-datos-493000</span></div>
+            <div><b>Dataset</b><span>youtube</span></div>
+            <div><b>Tabla</b><span>fact_final</span></div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown('<div class="sidebar-divider"></div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="sidebar-section-title">PROBAR CONEXIÓN</div>', unsafe_allow_html=True)
+
+    if st.button("Probar BigQuery", use_container_width=True):
         with st.spinner("Verificando conexión con BigQuery..."):
             try:
                 info = retriever.test_connection()
@@ -342,24 +491,9 @@ with st.sidebar:
                 st.error("❌ No se pudo conectar con BigQuery.")
                 st.exception(e)
 
-    st.markdown("---")
+    st.markdown('<div class="sidebar-divider"></div>', unsafe_allow_html=True)
 
-    st.markdown("### Preguntas sugeridas")
-
-    st.markdown(
-        """
-        - ¿Cuál es el resumen del canal?
-        - ¿Qué videos tienen más views?
-        - ¿Qué temas tienen mejor interacción?
-        - ¿En qué video hablaron de productividad?
-        - ¿Qué mejorarías del canal?
-        - ¿Qué videos rindieron peor de lo esperado?
-        """
-    )
-
-    st.markdown("---")
-
-    if st.button("Limpiar conversación"):
+    if st.button("Limpiar conversación", use_container_width=True):
         st.session_state.messages = []
         st.rerun()
 
