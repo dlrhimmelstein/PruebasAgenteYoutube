@@ -299,13 +299,7 @@ st.markdown("""
 # st.pills renderiza chips nativos de Streamlit que sí disparan eventos.
 # Lo ponemos justo debajo del HTML visual para que el usuario lo use.
 
-filtro_activo = st.pills(
-    label="",           # sin label, el HTML de arriba ya lo tiene
-    options=["Shorts", "Podcasts", "2024", "2023", "Videos cortos", "Videos largos", "Comentarios"],
-    selection_mode="multi",
-    key="filtros_canal",
-    label_visibility="collapsed"
-)
+
 
 # filtro_activo es una lista con los chips seleccionados.
 # Úsala donde construyas el prompt o donde filtres los resultados, por ejemplo:
@@ -594,23 +588,6 @@ with st.sidebar:
     if st.button("Limpiar conversación", key="btn_limpiar"):
         st.session_state.messages = []
         st.rerun()
-
-# =========================
-# 7. MENSAJE INFORMATIVO
-# =========================
-
-st.markdown(
-    """
-    <div class="info-box">
-        <b>¿Qué puede hacer este agente?</b><br>
-        <span class="small-text">
-        Puede responder sobre videos, métricas, temas, transcripciones, ranking de contenido,
-        recomendaciones y predicciones de rendimiento del canal.
-        </span>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
 
 
 # =========================
