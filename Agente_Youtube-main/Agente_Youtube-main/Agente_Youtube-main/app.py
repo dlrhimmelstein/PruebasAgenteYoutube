@@ -380,7 +380,7 @@ st.markdown(
     ========================= */
     
     .sidebar-spacer {
-        height: 10rem;
+        height: 1.5rem;
     }
     
     .channel-status-card {
@@ -410,6 +410,41 @@ st.markdown(
     
     .agent-active {
         color: #e60023 !important;
+    }
+
+    /* =========================
+       SIDEBAR SIN SCROLL
+    ========================= */
+    
+    [data-testid="stSidebar"] > div:first-child {
+        padding-top: 0.6rem !important;
+        padding-bottom: 0.5rem !important;
+    }
+    
+    .sidebar-item {
+        padding: 0.45rem 0.45rem !important;
+        margin-bottom: 0.12rem !important;
+    }
+    
+    .sidebar-section-title {
+        margin: 0.7rem 0 0.45rem 0 !important;
+    }
+    
+    .sidebar-divider {
+        margin: 0.7rem 0 !important;
+    }
+    
+    .channel-row {
+        margin-bottom: 0.4rem !important;
+    }
+    
+    .sidebar-spacer {
+        height: 2rem !important;
+    }
+    
+    .stButton > button {
+        padding-top: 0.38rem !important;
+        padding-bottom: 0.38rem !important;
     }
 
     /* =========================
