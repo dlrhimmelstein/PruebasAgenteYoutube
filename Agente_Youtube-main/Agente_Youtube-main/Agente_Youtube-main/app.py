@@ -167,53 +167,139 @@ st.markdown("""
 # =========================
 
 st.markdown("""
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
 <style>
-.youtube-header {
+
+.yt-topbar {
     background: #ffffff;
-    border-radius: 20px;
-    padding: 28px 32px;
-    margin-bottom: 24px;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    border-bottom: 1px solid #e5e5e5;
+    padding: 10px 20px;
     display: flex;
     align-items: center;
-    gap: 18px;
+    justify-content: space-between;
+    margin-bottom: 0;
 }
 
-.youtube-logo {
-    width: 42px;
-    height: 30px;
+.yt-topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.yt-topbar-logo {
+    width: 32px;
+    height: 32px;
     background: #ff0000;
-    border-radius: 9px;
-    color: white;
+    border-radius: 7px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    flex-shrink: 0;
+}
+.yt-topbar-logo svg { width: 17px; height: 17px; fill: white; }
+
+.yt-topbar-channel { font-size: 13px; font-weight: 600; color: #111; line-height: 1.3; }
+.yt-topbar-powered  { font-size: 11px; color: #888; line-height: 1.3; }
+
+.yt-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.youtube-title {
-    color: #0f0f0f;
-    font-size: 25px;
-    font-weight: 800;
+.yt-topbar-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid #e0e0e0;
+    font-size: 12px;
+    color: #444;
+    background: #fafafa;
+    white-space: nowrap;
 }
 
-.youtube-subtitle {
-    color: #606060;
+.yt-topbar-pill .dot-green {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.yt-topbar-pill-icon {
     font-size: 14px;
-    margin-top: 4px;
 }
+
+.yt-topbar-clear {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid #e0e0e0;
+    font-size: 12px;
+    color: #444;
+    background: #fafafa;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.yt-topbar-clear:hover { background: #f0f0f0; }
+
+.yt-topbar-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: #cc0000;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-left: 4px;
+}
+
 </style>
 
-<div class="youtube-header">
-    <div class="youtube-logo">▶</div>
-    <div>
-        <div class="youtube-title">Agente YouTube Analytics</div>
-        <div class="youtube-subtitle">
-            Consulta métricas, videos, temas y rendimiento del canal con Gemini + BigQuery
+<div class="yt-topbar">
+
+    <!-- IZQUIERDA: logo + nombre -->
+    <div class="yt-topbar-left">
+        <div class="yt-topbar-logo">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19.59 7a2.5 2.5 0 0 0-1.76-1.76C16.46 5 12 5 12 5s-4.46 0-5.83.24A2.5 2.5 0 0 0 4.41 7 26 26 0 0 0 4.17 12a26 26 0 0 0 .24 5 2.5 2.5 0 0 0 1.76 1.76C7.54 19 12 19 12 19s4.46 0 5.83-.24A2.5 2.5 0 0 0 19.59 17 26 26 0 0 0 19.83 12a26 26 0 0 0-.24-5zM10 15v-6l5 3-5 3z"/>
+            </svg>
+        </div>
+        <div>
+            <div class="yt-topbar-channel">Las Damitas Histeria</div>
+            <div class="yt-topbar-powered">Agente de análisis · Powered by Gemini</div>
         </div>
     </div>
+
+    <!-- DERECHA: pills de estado + avatar -->
+    <div class="yt-topbar-right">
+        <div class="yt-topbar-pill">
+            <span class="dot-green"></span>
+            Gemini conectado
+        </div>
+        <div class="yt-topbar-pill">
+            <i class="ti ti-brand-youtube yt-topbar-pill-icon" style="color:#ff0000;"></i>
+            299 videos
+        </div>
+        <div class="yt-topbar-clear">
+            Limpiar chat
+        </div>
+        <div class="yt-topbar-avatar">LDH</div>
+    </div>
+
 </div>
 """, unsafe_allow_html=True)
+
+# Botón invisible para limpiar chat (conecta con el HTML de arriba)
+# Puedes usar un st.button oculto o manejar limpiar desde el sidebar
 
 
 # =========================
