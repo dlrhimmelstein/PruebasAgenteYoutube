@@ -162,41 +162,93 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =========================
-# 5. ENCABEZADO
+# ENCABEZADO TIPO YOUTUBE
 # =========================
 
 st.markdown("""
-<div class="custom-card" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-    <div style="display:flex;align-items:center;gap:12px;">
-        <div style="
-            width:42px;
-            height:30px;
-            background:#E8001C;
-            border-radius:8px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            color:white;
-            font-weight:700;">
-            ▶
-        </div>
+<style>
+.youtube-header {
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 18px;
+    padding: 18px 22px;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+}
+
+.youtube-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.youtube-logo {
+    width: 48px;
+    height: 34px;
+    background: #ff0000;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.youtube-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #0f0f0f;
+    margin-bottom: 2px;
+}
+
+.youtube-subtitle {
+    font-size: 14px;
+    color: #606060;
+}
+
+.youtube-right {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.youtube-pill {
+    background: #f2f2f2;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 13px;
+    color: #0f0f0f;
+    font-weight: 600;
+}
+
+.youtube-live {
+    background: #e6f4ea;
+    color: #137333;
+}
+</style>
+
+<div class="youtube-header">
+    <div class="youtube-left">
+        <div class="youtube-logo">▶</div>
         <div>
-            <div style="font-size:20px;font-weight:700;color:#282828;">
-                Las Damitas Histeria
-            </div>
-            <div style="font-size:13px;color:#999999;">
-                Agente de análisis · Powered by Gemini
+            <div class="youtube-title">Agente YouTube Analytics</div>
+            <div class="youtube-subtitle">
+                Consulta métricas, videos, temas y rendimiento del canal con Gemini + BigQuery
             </div>
         </div>
     </div>
 
-    <div>
-        <span class="stat-pill"><span class="dot"></span> Gemini conectado</span>
-        <span class="stat-pill">📊 299 videos</span>
+    <div class="youtube-right">
+        <div class="youtube-pill youtube-live">● Gemini conectado</div>
+        <div class="youtube-pill">📊 299 videos</div>
+        <div class="youtube-pill">▶ YouTube</div>
     </div>
 </div>
 """, unsafe_allow_html=True)
-
 # =========================
 # 6. SIDEBAR
 # =========================
