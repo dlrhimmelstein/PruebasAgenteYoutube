@@ -573,42 +573,27 @@ with st.sidebar:
 # 7. MENSAJE INFORMATIVO
 # =========================
 
-st.markdown(
-    """
-    <div class="welcome-card">
-
-        <div class="welcome-top">
-            <div class="welcome-icon">✨</div>
-
-            <div>
-                <div class="welcome-title">
-                    ¿Qué puede hacer este agente?
-                </div>
-
-                <div class="welcome-subtitle">
-                    Consulta métricas, rendimiento, temas, transcripciones y recomendaciones del canal usando lenguaje natural.
-                </div>
+st.markdown("""
+<div class="welcome-card">
+    <div class="welcome-top">
+        <div class="welcome-icon">✨</div>
+        <div>
+            <div class="welcome-title">¿Qué puede hacer este agente?</div>
+            <div class="welcome-subtitle">
+                Consulta métricas, rendimiento, temas, transcripciones y recomendaciones del canal usando lenguaje natural.
             </div>
         </div>
-
-        <div class="welcome-tags">
-
-            <div class="welcome-tag">📊 Analytics</div>
-
-            <div class="welcome-tag">🎬 Videos</div>
-
-            <div class="welcome-tag">🔥 Engagement</div>
-
-            <div class="welcome-tag">🧠 Gemini AI</div>
-
-            <div class="welcome-tag">📈 Predicciones</div>
-
-        </div>
-
     </div>
-    """,
-    unsafe_allow_html=True
-)
+
+    <div class="welcome-tags">
+        <div class="welcome-tag">📊 Analytics</div>
+        <div class="welcome-tag">🎬 Videos</div>
+        <div class="welcome-tag">🔥 Engagement</div>
+        <div class="welcome-tag">🧠 Gemini AI</div>
+        <div class="welcome-tag">📈 Predicciones</div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 
 # =========================
