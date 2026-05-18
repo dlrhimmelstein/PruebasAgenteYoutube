@@ -267,13 +267,22 @@ with st.sidebar:
     div.stButton > button {
         width: 100%;
         background: #2a2a3d;
-        color: white;
+        color: white !important;
         border: 1px solid #3a3a52;
         border-radius: 12px;
         padding: 12px;
         text-align: left;
         font-weight: 600;
         transition: 0.2s;
+    }
+
+    div.stButton > button p {
+        color: white !important;
+        font-weight: 600 !important;
+    }
+
+    div.stButton > button span {
+        color: white !important;
     }
 
     div.stButton > button:hover {
