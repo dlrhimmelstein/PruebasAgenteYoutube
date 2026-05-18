@@ -766,39 +766,18 @@ st.markdown('</div>', unsafe_allow_html=True)
 # =========================
 
 with st.sidebar:
+
     st.markdown('<div class="sidebar-spacer"></div>', unsafe_allow_html=True)
 
     st.markdown(
-        """
-        <div class="channel-status-card">
-            <div class="sidebar-section-title">CANAL AL DÍA</div>
-
-            <div class="channel-row">
-                <span>Videos</span>
-                <b>299</b>
-            </div>
-
-            <div class="channel-row">
-                <span>Views totales</span>
-                <b>16.7M</b>
-            </div>
-
-            <div class="channel-row">
-                <span>Likes totales</span>
-                <b>716K</b>
-            </div>
-
-            <div class="channel-row">
-                <span>Comentarios</span>
-                <b>34.8K</b>
-            </div>
-
-            <div class="channel-row">
-                <span>Estado del agente</span>
-                <b class="agent-active">● Activo</b>
-            </div>
-        </div>
-        """,
+        '<div class="channel-status-card">'
+        '<div class="sidebar-section-title">CANAL AL DÍA</div>'
+        '<div class="channel-row"><span>Videos</span><b>299</b></div>'
+        '<div class="channel-row"><span>Views totales</span><b>16.7M</b></div>'
+        '<div class="channel-row"><span>Likes totales</span><b>716K</b></div>'
+        '<div class="channel-row"><span>Comentarios</span><b>34.8K</b></div>'
+        '<div class="channel-row"><span>Estado del agente</span><b class="agent-active">● Activo</b></div>'
+        '</div>',
         unsafe_allow_html=True
     )
 
