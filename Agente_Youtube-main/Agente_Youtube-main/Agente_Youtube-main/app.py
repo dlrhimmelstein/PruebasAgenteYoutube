@@ -457,7 +457,45 @@ st.markdown(
         font-size: 0.78rem;
         font-weight: 600;
     }
-        
+
+    /* =========================
+       MENSAJES DEL SIDEBAR
+    ========================= */
+    
+    [data-testid="stSidebar"] .stSuccess {
+        background-color: #dcfce7;
+        color: #166534;
+        border-radius: 10px;
+    }
+    
+    [data-testid="stSidebar"] .stSuccess div {
+        color: #166534;
+    }
+    
+    [data-testid="stSidebar"] .stWrite,
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] span,
+    [data-testid="stSidebar"] label {
+        color: #0f0f0f;
+    }
+    
+    .connection-info {
+        margin-top: 0.8rem;
+        color: #0f0f0f;
+        font-size: 0.82rem;
+    }
+    
+    .connection-info p {
+        color: #0f0f0f !important;
+        margin-bottom: 0.45rem;
+    }
+    
+    .connection-info code {
+        background: #111827;
+        color: #22c55e;
+        padding: 0.15rem 0.35rem;
+        border-radius: 6px;
+    }
 
     </style>
     """,
@@ -536,9 +574,13 @@ with st.sidebar:
                 info = retriever.test_connection()
                 st.success("✅ Conexión exitosa")
 
-                st.write("**Tabla:**", info["tabla"])
-                st.write("**Filas:**", info["filas"])
-                st.write("**Columnas:**", info["columnas"])
+                st.markdown(f"""
+                    <div class="connection-info">
+                        <p><b>Tabla:</b> <code>{info["tabla"]}</code></p>
+                        <p><b>Filas:</b> <code>{info["filas"]}</code></p>
+                        <p><b>Columnas:</b> <code>{info["columnas"]}</code></p>
+                    </div>
+                    """, unsafe_allow_html=True)
 
             except Exception as e:
                 st.error("❌ No se pudo conectar con BigQuery.")
