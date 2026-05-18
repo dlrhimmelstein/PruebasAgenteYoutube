@@ -65,13 +65,20 @@ except Exception as e:
 st.markdown(
     """
     <style>
-    /* Fondo general */
+
+    /* =========================
+       FONDO GENERAL
+    ========================= */
+
     .stApp {
         background-color: #f7f7f7;
         color: #0f0f0f;
     }
 
-    /* Contenedor principal */
+    /* =========================
+       CONTENEDOR PRINCIPAL
+    ========================= */
+
     .block-container {
         padding-top: 1.2rem;
         padding-bottom: 6rem;
@@ -80,34 +87,118 @@ st.markdown(
         max-width: 100%;
     }
 
-    /* Tipografía general */
+    /* =========================
+       TIPOGRAFÍA
+    ========================= */
+
     html, body, [class*="css"] {
         font-family: "Inter", "Segoe UI", sans-serif;
     }
 
-    /* Título superior */
-    .main-title {
-        font-size: 1.45rem;
+    /* =========================
+       HEADER TIPO YOUTUBE
+    ========================= */
+
+    .yt-header {
+        width: 100%;
+        height: 60px;
+
+        background: #ffffff;
+        border-bottom: 1px solid #e5e5e5;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 0 1.2rem;
+
+        margin:
+            -1.2rem
+            -2rem
+            1.5rem
+            -2rem;
+
+        box-sizing: border-box;
+    }
+
+    .yt-header-left {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .yt-logo {
+        width: 34px;
+        height: 34px;
+
+        border-radius: 10px;
+
+        background: #ff0000;
+        color: white;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 0.9rem;
+        font-weight: 800;
+    }
+
+    .yt-title {
+        color: #0f0f0f;
+        font-size: 1rem;
         font-weight: 800;
         line-height: 1.1;
-        margin-bottom: 0.15rem;
-        color: #0f0f0f;
     }
 
-    .subtitle {
-        font-size: 0.82rem;
+    .yt-subtitle {
         color: #6b7280;
-        margin-bottom: 0;
+        font-size: 0.72rem;
+        margin-top: 2px;
     }
 
-    /* Caja informativa */
+    .yt-header-right {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+
+    .yt-pill {
+        background: #ffffff;
+
+        border: 1px solid #e5e7eb;
+
+        border-radius: 999px;
+
+        padding:
+            0.35rem
+            0.8rem;
+
+        font-size: 0.76rem;
+        font-weight: 500;
+
+        color: #4b5563;
+
+        box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+
+    /* =========================
+       CAJAS
+    ========================= */
+
     .info-box {
         background-color: #ffffff;
+
         padding: 1rem 1.2rem;
+
         border-radius: 18px;
+
         border: 1px solid #e5e7eb;
+
         box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+
         margin-bottom: 1.2rem;
+
         color: #374151;
     }
 
@@ -116,35 +207,60 @@ st.markdown(
         font-size: 0.85rem;
     }
 
-    /* Botones */
+    /* =========================
+       BOTONES
+    ========================= */
+
     .stButton > button {
         border-radius: 999px;
+
         border: 1px solid #d1d5db;
+
         background-color: #ffffff;
+
         color: #374151;
+
         font-weight: 600;
-        padding: 0.45rem 0.9rem;
+
+        padding:
+            0.45rem
+            0.9rem;
+
         box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+
         transition: all 0.2s ease;
     }
 
     .stButton > button:hover {
         background-color: #f1f1f1;
+
         border-color: #c7c7c7;
+
         color: #0f0f0f;
+
         transform: translateY(-1px);
     }
 
-    /* Input inferior */
+    /* =========================
+       CHAT INPUT
+    ========================= */
+
     .stChatInput textarea {
         background-color: #ffffff !important;
+
         color: #0f0f0f !important;
+
         border-radius: 999px !important;
+
         border: 1px solid #d1d5db !important;
+
         box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
-    /* Mensajes del chat */
+    /* =========================
+       MENSAJES CHAT
+    ========================= */
+
     [data-testid="stChatMessage"] {
         background: transparent;
     }
@@ -153,7 +269,10 @@ st.markdown(
         color: #0f0f0f;
     }
 
-    /* Ocultar menú superior de Streamlit si molesta */
+    /* =========================
+       OCULTAR STREAMLIT
+    ========================= */
+
     #MainMenu {
         visibility: hidden;
     }
@@ -161,10 +280,16 @@ st.markdown(
     footer {
         visibility: hidden;
     }
+
+    header {
+        visibility: hidden;
+    }
+
     </style>
     """,
     unsafe_allow_html=True
 )
+
 
 # =========================
 # 5. ENCABEZADO
@@ -172,36 +297,19 @@ st.markdown(
 
 st.markdown(
     """
-    <div class="top-header">
-
-        <div class="header-left">
-            <div class="youtube-logo">
-                ▶
-            </div>
-
+    <div class="yt-header">
+        <div class="yt-header-left">
+            <div class="yt-logo">▶</div>
             <div>
-                <div class="main-title">
-                    Las Damitas Histeria
-                </div>
-
-                <div class="subtitle">
-                    Agente de análisis • Powered by Gemini
-                </div>
+                <div class="yt-title">Las Damitas Histeria</div>
+                <div class="yt-subtitle">Agente de análisis · Powered by Gemini</div>
             </div>
         </div>
 
-        <div class="header-right">
-
-            <div class="status-pill">
-                🟢 Gemini conectado
-            </div>
-
-            <div class="status-pill">
-                📊 299 videos
-            </div>
-
+        <div class="yt-header-right">
+            <div class="yt-pill">🟢 Gemini conectado</div>
+            <div class="yt-pill">📊 299 videos</div>
         </div>
-
     </div>
     """,
     unsafe_allow_html=True
