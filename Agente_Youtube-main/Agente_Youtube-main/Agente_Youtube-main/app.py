@@ -99,7 +99,7 @@ st.markdown(
        HEADER TIPO YOUTUBE
     ========================= */
 
-    .yt-header {
+    .yt-header-wrapper {
         width: 100%;
         height: 60px;
 
@@ -119,12 +119,6 @@ st.markdown(
             -2rem;
 
         box-sizing: border-box;
-    }
-
-    .yt-header-left {
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
     }
 
     .yt-logo {
@@ -155,12 +149,6 @@ st.markdown(
         color: #6b7280;
         font-size: 0.72rem;
         margin-top: 2px;
-    }
-
-    .yt-header-right {
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
     }
 
     .yt-pill {
@@ -295,44 +283,29 @@ st.markdown(
 # 5. ENCABEZADO
 # =========================
 
-st.markdown(
-    """
-    <div class="yt-header">
+st.markdown('<div class="yt-header-wrapper">', unsafe_allow_html=True)
 
-        <div class="yt-header-left">
+col_logo, col_text, col_status, col_videos = st.columns([0.35, 3, 1, 0.9])
 
-            <div class="yt-logo">
-                ▶
-            </div>
+with col_logo:
+    st.markdown('<div class="yt-logo">▶</div>', unsafe_allow_html=True)
 
-            <div>
-                <div class="yt-title">
-                    Las Damitas Histeria
-                </div>
+with col_text:
+    st.markdown(
+        """
+        <div class="yt-title">Las Damitas Histeria</div>
+        <div class="yt-subtitle">Agente de análisis · Powered by Gemini</div>
+        """,
+        unsafe_allow_html=True
+    )
 
-                <div class="yt-subtitle">
-                    Agente de análisis · Powered by Gemini
-                </div>
-            </div>
+with col_status:
+    st.markdown('<div class="yt-pill">🟢 Gemini conectado</div>', unsafe_allow_html=True)
 
-        </div>
+with col_videos:
+    st.markdown('<div class="yt-pill">📊 299 videos</div>', unsafe_allow_html=True)
 
-        <div class="yt-header-right">
-
-            <div class="yt-pill">
-                🟢 Gemini conectado
-            </div>
-
-            <div class="yt-pill">
-                📊 299 videos
-            </div>
-
-        </div>
-
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+st.markdown('</div>', unsafe_allow_html=True)
 
 
 # =========================
