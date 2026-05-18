@@ -219,147 +219,278 @@ st.markdown("""
 # =========================
 # SIDEBAR TIPO YOUTUBE
 # =========================
-
-st.markdown("""
-<style>
-
-/* App completa */
-[data-testid="stAppViewContainer"] {
-    background: #f0f0f0;
-}
-
-/* Contenedor principal */
-.main .block-container {
-    max-width: 1200px;
-    padding-top: 1.5rem;
-    padding-bottom: 2rem;
-}
-
-/* Sidebar fijo */
-section[data-testid="stSidebar"] {
-    width: 320px !important;
-    min-width: 320px !important;
-    max-width: 320px !important;
-}
-
-/* Evita cambios raros del sidebar */
-section[data-testid="stSidebar"] > div {
-    width: 320px !important;
-}
-
-/* Chat centrado */
-[data-testid="stChatMessageContainer"] {
-    max-width: 850px;
-    margin: auto;
-}
-
-/* Input fijo abajo */
-[data-testid="stChatInput"] {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-35%);
-    width: 700px;
-    z-index: 999;
-    background: transparent;
-}
-
-/* Caja del input */
-[data-testid="stChatInput"] textarea {
-    border-radius: 20px !important;
-    border: 1px solid #d0d0d0 !important;
-    background: white !important;
-    padding-top: 12px !important;
-}
-
-/* Evita que el contenido choque con el input */
-.main .block-container {
-    padding-bottom: 120px;
-}
-
-/* Scroll suave */
-html {
-    scroll-behavior: smooth;
-}
-
-/* Ocultar footer streamlit */
-footer {
-    visibility: hidden;
-}
-
-/* Ocultar menú */
-#MainMenu {
-    visibility: hidden;
-}
-
-</style>
-""", unsafe_allow_html=True)
-
+ 
 with st.sidebar:
-
-    st.markdown(
-        '<div class="sidebar-title">⚙️ Panel del agente</div>',
-        unsafe_allow_html=True
-    )
-
-    st.markdown(
-        '<div class="sidebar-subtitle">Accesos rápidos</div>',
-        unsafe_allow_html=True
-    )
-
-    if st.button("🏆  Top videos\nRanking por vistas"):
-        st.session_state.prompt_sugerido = (
-            "¿Cuáles son mis 5 videos con más vistas?"
-        )
-
-    if st.button("📅  Mejor día para publicar\nAnálisis de rendimiento"):
-        st.session_state.prompt_sugerido = (
-            "¿Qué días son mejores para publicar?"
-        )
-
-    if st.button("🎯  Temas más exitosos\nPor engagement"):
-        st.session_state.prompt_sugerido = (
-            "¿Qué temas tienen más engagement?"
-        )
-
-    if st.button("📈  Resumen del canal\nStats generales"):
-        st.session_state.prompt_sugerido = (
-            "Dame un resumen del canal"
-        )
-
-    if st.button("🎬  Formatos que funcionan\nShorts vs podcasts"):
-        st.session_state.prompt_sugerido = (
-            "¿Qué formatos funcionan mejor?"
-        )
-
-    if st.button("❤️  Mayor engagement\nLikes y comentarios"):
-        st.session_state.prompt_sugerido = (
-            "¿Qué videos tienen mayor engagement?"
-        )
-
-    st.divider()
-
-    st.markdown(
-        '<div class="sidebar-subtitle">Canal al día</div>',
-        unsafe_allow_html=True
-    )
-
+ 
     st.markdown("""
-    <div class="sidebar-card">
-        <div class="metric-label">Videos</div>
-        <div class="metric-value">299</div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+ 
+    <style>
+ 
+    section[data-testid="stSidebar"] {
+        background: #ffffff !important;
+        border-right: 1px solid #e5e5e5 !important;
+    }
+ 
+    section[data-testid="stSidebar"] > div:first-child {
+        padding: 0 !important;
+    }
+ 
+    /* ---- HEADER ---- */
+    .yt-sb-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 16px 12px;
+        border-bottom: 1px solid #f0f0f0;
+        margin-bottom: 0;
+    }
+    .yt-sb-logo {
+        width: 34px;
+        height: 34px;
+        background: #ff0000;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .yt-sb-logo svg { width: 18px; height: 18px; fill: white; }
+    .yt-sb-channel { font-size: 13px; font-weight: 600; color: #111; line-height: 1.3; }
+    .yt-sb-powered  { font-size: 11px; color: #888; line-height: 1.3; }
+ 
+    /* ---- SECTION LABEL ---- */
+    .yt-sb-label {
+        padding: 12px 16px 4px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: #aaa;
+        text-transform: uppercase;
+    }
+ 
+    /* ---- MENU ITEMS ---- */
+    .yt-sb-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 8px 16px;
+        cursor: pointer;
+        transition: background 0.12s;
+    }
+    .yt-sb-item:hover { background: #f5f5f5; }
+ 
+    .yt-sb-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 15px;
+    }
+    .ic-orange { background: #fff3e0; color: #e65c00; }
+    .ic-blue   { background: #e3f2fd; color: #1565c0; }
+    .ic-green  { background: #e8f5e9; color: #2e7d32; }
+    .ic-purple { background: #f3e5f5; color: #6a1b9a; }
+    .ic-teal   { background: #e0f2f1; color: #00695c; }
+    .ic-pink   { background: #fce4ec; color: #880e4f; }
+    .ic-yellow { background: #fffde7; color: #f57f17; }
+    .ic-red    { background: #ffebee; color: #b71c1c; }
+ 
+    .yt-sb-item-title { font-size: 13px; font-weight: 500; color: #111; line-height: 1.3; }
+    .yt-sb-item-sub   { font-size: 11px; color: #888; line-height: 1.3; }
+ 
+    /* ---- DIVIDER ---- */
+    .yt-sb-divider { height: 1px; background: #f0f0f0; margin: 6px 0; }
+ 
+    /* ---- STATS BOX ---- */
+    .yt-sb-stats {
+        margin: 8px 12px 12px;
+        background: #f9f9f9;
+        border-radius: 10px;
+        padding: 12px 14px;
+        border: 1px solid #efefef;
+    }
+    .yt-sb-stats-title {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: #aaa;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+    }
+    .yt-sb-stat-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 3px 0;
+        font-size: 12px;
+    }
+    .yt-sb-stat-label { color: #777; }
+    .yt-sb-stat-val   { font-weight: 600; color: #111; }
+    .yt-sb-status-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 4px 0;
+    }
+    .yt-sb-dot {
+        display: inline-block;
+        width: 7px; height: 7px;
+        border-radius: 50%;
+        background: #22c55e;
+        margin-right: 5px;
+    }
+    .yt-sb-status-label { font-size: 12px; color: #777; }
+    .yt-sb-status-val   { font-size: 12px; font-weight: 600; color: #22c55e; }
+ 
+    /* Ocultar botones nativos de Streamlit en sidebar */
+    section[data-testid="stSidebar"] div.stButton > button {
+        display: none;
+    }
+ 
+    </style>
+ 
+    <!-- HEADER -->
+    <div class="yt-sb-header">
+        <div class="yt-sb-logo">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19.59 7a2.5 2.5 0 0 0-1.76-1.76C16.46 5 12 5 12 5s-4.46 0-5.83.24A2.5 2.5 0 0 0 4.41 7 26 26 0 0 0 4.17 12a26 26 0 0 0 .24 5 2.5 2.5 0 0 0 1.76 1.76C7.54 19 12 19 12 19s4.46 0 5.83-.24A2.5 2.5 0 0 0 19.59 17 26 26 0 0 0 19.83 12a26 26 0 0 0-.24-5zM10 15v-6l5 3-5 3z"/>
+            </svg>
+        </div>
+        <div>
+            <div class="yt-sb-channel">Las Damitas Histeria</div>
+            <div class="yt-sb-powered">Agente de análisis · Powered by Gemini</div>
+        </div>
     </div>
-
-    <div class="sidebar-card">
-        <div class="metric-label">Views totales</div>
-        <div class="metric-value">16.7M</div>
+ 
+    <!-- ACCESOS RÁPIDOS -->
+    <div class="yt-sb-label">Accesos rápidos</div>
+ 
+    <div class="yt-sb-item">
+        <div class="yt-sb-icon ic-orange"><i class="ti ti-trophy"></i></div>
+        <div>
+            <div class="yt-sb-item-title">Top videos</div>
+            <div class="yt-sb-item-sub">Ranking por vistas</div>
+        </div>
     </div>
-
-    <div class="sidebar-card">
-        <div class="metric-label">Likes totales</div>
-        <div class="metric-value">716K</div>
+ 
+    <div class="yt-sb-item">
+        <div class="yt-sb-icon ic-blue"><i class="ti ti-calendar-stats"></i></div>
+        <div>
+            <div class="yt-sb-item-title">Mejor día para publicar</div>
+            <div class="yt-sb-item-sub">Análisis de rendimiento</div>
+        </div>
     </div>
+ 
+    <div class="yt-sb-item">
+        <div class="yt-sb-icon ic-green"><i class="ti ti-flame"></i></div>
+        <div>
+            <div class="yt-sb-item-title">Temas más exitosos</div>
+            <div class="yt-sb-item-sub">Por engagement</div>
+        </div>
+    </div>
+ 
+    <div class="yt-sb-item">
+        <div class="yt-sb-icon ic-purple"><i class="ti ti-chart-bar"></i></div>
+        <div>
+            <div class="yt-sb-item-title">Resumen del canal</div>
+            <div class="yt-sb-item-sub">Stats generales</div>
+        </div>
+    </div>
+ 
+    <div class="yt-sb-item">
+        <div class="yt-sb-icon ic-teal"><i class="ti ti-layout-grid"></i></div>
+        <div>
+            <div class="yt-sb-item-title">Formatos que funcionan</div>
+            <div class="yt-sb-item-sub">Shorts vs podcasts</div>
+        </div>
+    </div>
+ 
+    <div class="yt-sb-item">
+        <div class="yt-sb-icon ic-pink"><i class="ti ti-heart"></i></div>
+        <div>
+            <div class="yt-sb-item-title">Mayor engagement</div>
+            <div class="yt-sb-item-sub">Likes y comentarios</div>
+        </div>
+    </div>
+ 
+    <div class="yt-sb-divider"></div>
+ 
+    <!-- BUSCAR VIDEO -->
+    <div class="yt-sb-label">Buscar video</div>
+ 
+    <div class="yt-sb-item">
+        <div class="yt-sb-icon ic-blue"><i class="ti ti-search"></i></div>
+        <div>
+            <div class="yt-sb-item-title">Buscar por tema</div>
+            <div class="yt-sb-item-sub">¿En qué ep hablaron de X?</div>
+        </div>
+    </div>
+ 
+    <div class="yt-sb-item">
+        <div class="yt-sb-icon ic-yellow"><i class="ti ti-video"></i></div>
+        <div>
+            <div class="yt-sb-item-title">Analizar video</div>
+            <div class="yt-sb-item-sub">Por título o URL</div>
+        </div>
+    </div>
+ 
+    <div class="yt-sb-divider"></div>
+ 
+    <!-- STATS -->
+    <div class="yt-sb-stats">
+        <div class="yt-sb-stats-title">Canal al día</div>
+        <div class="yt-sb-stat-row">
+            <span class="yt-sb-stat-label">Videos</span>
+            <span class="yt-sb-stat-val">299</span>
+        </div>
+        <div class="yt-sb-stat-row">
+            <span class="yt-sb-stat-label">Views totales</span>
+            <span class="yt-sb-stat-val">16.7M</span>
+        </div>
+        <div class="yt-sb-stat-row">
+            <span class="yt-sb-stat-label">Likes totales</span>
+            <span class="yt-sb-stat-val">716K</span>
+        </div>
+        <div class="yt-sb-stat-row">
+            <span class="yt-sb-stat-label">Comentarios</span>
+            <span class="yt-sb-stat-val">34.8K</span>
+        </div>
+        <div class="yt-sb-divider" style="margin: 6px 0;"></div>
+        <div class="yt-sb-status-row">
+            <span class="yt-sb-status-label">
+                <span class="yt-sb-dot"></span>Estado del agente
+            </span>
+            <span class="yt-sb-status-val">Activo</span>
+        </div>
+    </div>
+ 
     """, unsafe_allow_html=True)
+ 
+    # ---- Botones invisibles (mantienen la funcionalidad) ----
+    if st.button("Top videos", key="btn_top"):
+        st.session_state.prompt_sugerido = "¿Cuáles son mis 5 videos con más vistas?"
+ 
+    if st.button("Mejor día para publicar", key="btn_dia"):
+        st.session_state.prompt_sugerido = "¿Qué días de la semana son mejores para publicar?"
+ 
+    if st.button("Temas más exitosos", key="btn_temas"):
+        st.session_state.prompt_sugerido = "¿Qué temas tienen mejor engagement?"
+ 
+    if st.button("Resumen del canal", key="btn_resumen"):
+        st.session_state.prompt_sugerido = "Dame un resumen general del canal"
+ 
+    if st.button("Formatos que funcionan", key="btn_formatos"):
+        st.session_state.prompt_sugerido = "¿Qué formatos funcionan mejor en el canal?"
+ 
+    if st.button("Mayor engagement", key="btn_engagement"):
+        st.session_state.prompt_sugerido = "¿Qué videos tienen mayor engagement?"
+ 
+    if st.button("Limpiar conversación", key="btn_limpiar"):
+        st.session_state.messages = []
+        st.rerun()
 
 # =========================
 # 7. MENSAJE INFORMATIVO
