@@ -61,64 +61,110 @@ except Exception as e:
 # 4. ESTILOS VISUALES
 # =========================
 
-st.markdown(
-    """
-    <style>
-    .block-container {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-        max-width: 950px;
-    }
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
 
-    .main-title {
-        font-size: 2.3rem;
-        font-weight: 800;
-        line-height: 1.1;
-        margin-bottom: 0.3rem;
-    }
+:root {
+    --bg-base: #F0F0F0;
+    --bg-surface: #F7F7F7;
+    --bg-card: #FFFFFF;
+    --bg-sidebar: #EBEBEB;
+    --border: #E0E0E0;
+    --border-dark: #CCCCCC;
+    --text-primary: #282828;
+    --text-secondary: #666666;
+    --text-muted: #999999;
+    --yt-red: #E8001C;
+    --yt-red-soft: #FFF0F0;
+    --yt-red-mid: #FFDDDD;
+    --user-bubble: #1A56A8;
+    --font-main: 'DM Sans', system-ui, sans-serif;
+}
 
-    .subtitle {
-        font-size: 1rem;
-        color: #64748b;
-        margin-bottom: 1.5rem;
-    }
+html, body, [class*="css"] {
+    font-family: var(--font-main);
+}
 
-    .info-box {
-        background-color: #f8fafc;
-        padding: 1rem;
-        border-radius: 0.8rem;
-        border: 1px solid #e2e8f0;
-        margin-bottom: 1.2rem;
-    }
+[data-testid="stAppViewContainer"] {
+    background: var(--bg-base);
+}
 
-    .small-text {
-        color: #64748b;
-        font-size: 0.9rem;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+.block-container {
+    padding-top: 1rem;
+    max-width: 1100px;
+}
 
+.custom-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: 0 2px 8px rgba(40,40,40,0.08);
+}
+
+.stat-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 13px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-right: 8px;
+}
+
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #2BA84A;
+    display: inline-block;
+}
+
+.yt-red {
+    color: var(--yt-red);
+}
+</style>
+""", unsafe_allow_html=True)
 
 # =========================
 # 5. ENCABEZADO
 # =========================
 
-st.markdown(
-    '<div class="main-title">📊 Agente Inteligente para YouTube</div>',
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    """
-    <div class="subtitle">
-    Consulta información del canal usando lenguaje natural. 
-    El agente recupera datos desde BigQuery, analiza métricas y genera respuestas con Gemini.
+st.markdown("""
+<div class="custom-card" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+    <div style="display:flex;align-items:center;gap:12px;">
+        <div style="
+            width:42px;
+            height:30px;
+            background:#E8001C;
+            border-radius:8px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:white;
+            font-weight:700;">
+            ▶
+        </div>
+        <div>
+            <div style="font-size:20px;font-weight:700;color:#282828;">
+                Las Damitas Histeria
+            </div>
+            <div style="font-size:13px;color:#999999;">
+                Agente de análisis · Powered by Gemini
+            </div>
+        </div>
     </div>
-    """,
-    unsafe_allow_html=True
-)
+
+    <div>
+        <span class="stat-pill"><span class="dot"></span> Gemini conectado</span>
+        <span class="stat-pill">📊 299 videos</span>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 
 # =========================
@@ -126,55 +172,23 @@ st.markdown(
 # =========================
 
 with st.sidebar:
-    st.title("⚙️ Panel del agente")
 
-    st.markdown("### Fuente de datos")
-    st.markdown(
-        """
-        **Proyecto:** `mineria-datos-493000`  
-        **Dataset:** `youtube`  
-        **Tabla:** `fact_final`
-        """
-    )
+    st.markdown("## ⚙️ Panel del agente")
 
-    st.markdown("---")
+    if st.button("🏆 Top videos"):
+        st.session_state.prompt_sugerido = (
+            "¿Cuáles son mis 5 videos con más vistas?"
+        )
 
-    st.markdown("### Probar conexión")
+    if st.button("📅 Mejor día para publicar"):
+        st.session_state.prompt_sugerido = (
+            "¿Qué días son mejores para publicar?"
+        )
 
-    if st.button("Probar BigQuery"):
-        with st.spinner("Verificando conexión con BigQuery..."):
-            try:
-                info = retriever.test_connection()
-                st.success("✅ Conexión exitosa")
-
-                st.write("**Tabla:**", info["tabla"])
-                st.write("**Filas:**", info["filas"])
-                st.write("**Columnas:**", info["columnas"])
-
-            except Exception as e:
-                st.error("❌ No se pudo conectar con BigQuery.")
-                st.exception(e)
-
-    st.markdown("---")
-
-    st.markdown("### Preguntas sugeridas")
-
-    st.markdown(
-        """
-        - ¿Cuál es el resumen del canal?
-        - ¿Qué videos tienen más views?
-        - ¿Qué temas tienen mejor interacción?
-        - ¿En qué video hablaron de productividad?
-        - ¿Qué mejorarías del canal?
-        - ¿Qué videos rindieron peor de lo esperado?
-        """
-    )
-
-    st.markdown("---")
-
-    if st.button("Limpiar conversación"):
-        st.session_state.messages = []
-        st.rerun()
+    if st.button("🎯 Temas más exitosos"):
+        st.session_state.prompt_sugerido = (
+            "¿Qué temas tienen más engagement?"
+        )
 
 
 # =========================
@@ -225,13 +239,22 @@ for message in st.session_state.messages:
 # 10. CAPTURAR PREGUNTA DEL USUARIO
 # =========================
 
+# Input principal
 prompt = st.chat_input(
-    "Ej: ¿Qué temas tienen mejor interacción en el canal?"
+    "Pregunta sobre el canal… ej: ¿De qué hablaron en el episodio 40?"
 )
 
+# Si el usuario dio click en un botón del sidebar
+if "prompt_sugerido" in st.session_state:
+    prompt = st.session_state.prompt_sugerido
+    del st.session_state.prompt_sugerido
+
+
 if prompt:
+
     # Mostrar mensaje del usuario
-    st.chat_message("user").markdown(prompt)
+    with st.chat_message("user"):
+        st.markdown(prompt)
 
     st.session_state.messages.append(
         {
@@ -240,10 +263,13 @@ if prompt:
         }
     )
 
-    # Generar respuesta del agente
+    # Respuesta del agente
     with st.chat_message("assistant"):
+
         with st.spinner("Consultando BigQuery y generando respuesta..."):
+
             try:
+
                 respuesta_texto = agent.answer(prompt)
 
                 st.markdown(respuesta_texto)
@@ -256,15 +282,14 @@ if prompt:
                 )
 
             except Exception as e:
+
                 mensaje_error = (
                     "**Ocurrió un error al procesar tu pregunta:**\n\n"
                     f"`{str(e)}`\n\n"
-                    "Revisa que tus Secrets estén configurados correctamente "
-                    "y que la cuenta de servicio tenga permisos para BigQuery."
+                    "Revisa tus Secrets y permisos de BigQuery."
                 )
 
                 st.error(mensaje_error)
-                st.exception(e)
 
                 st.session_state.messages.append(
                     {
