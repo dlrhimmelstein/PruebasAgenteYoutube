@@ -603,7 +603,6 @@ st.markdown(
 
     /* Forzar fondo claro en la zona inferior */
     [data-testid="stBottom"],
-    [data-testid="stBottom"] *,
     [data-testid="stBottom"] > div,
     [data-testid="stChatInput"],
     [data-testid="stChatInput"] > div {
