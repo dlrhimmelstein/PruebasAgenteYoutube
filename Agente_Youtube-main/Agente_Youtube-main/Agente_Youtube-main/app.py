@@ -523,7 +523,7 @@ st.markdown(
         color: #4b5563;
     }
 
-  /* =========================
+     /* =========================
        CHAT INPUT FINAL
     ========================= */
     
@@ -548,22 +548,46 @@ st.markdown(
     
     [data-baseweb="textarea"] {
         border-radius: 999px !important;
+    
         border: 1px solid #d1d5db !important;
-        background: white !important;
+    
+        background: #ffffff !important;
+    
         box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
     }
     
     [data-baseweb="textarea"] textarea {
+    
+        background: #ffffff !important;
+    
         color: #111827 !important;
+    
         font-size: 0.95rem !important;
-        padding-top: 0.85rem !important;
+    
+        padding-top: 0.95rem !important;
+    
+        padding-left: 1.2rem !important;
+    
+        text-align: left !important;
     }
     
-    [data-testid="stChatInput"] button {
-        background: #ff0000 !important;
-        color: white !important;
-        border-radius: 999px !important;
+    [data-baseweb="textarea"] textarea::placeholder {
+    
+        color: #9ca3af !important;
+    
+        opacity: 1 !important;
     }
+
+[data-testid="stChatInput"] button {
+
+    background: #ff0000 !important;
+
+    color: white !important;
+
+    border-radius: 999px !important;
+
+    border: none !important;
+}
 
     /* =========================
        MENSAJES CHAT
