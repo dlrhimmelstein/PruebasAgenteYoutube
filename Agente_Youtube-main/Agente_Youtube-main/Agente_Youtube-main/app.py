@@ -228,12 +228,7 @@ st.markdown(
 
         transform: translateY(-1px);
     }
-
-    /* =========================
-       CHAT INPUT
-    ========================= */
-
-
+    
     /* =========================
        MENSAJES CHAT
     ========================= */
@@ -528,40 +523,40 @@ st.markdown(
         color: #4b5563;
     }
 
-   /* =========================
-       CHAT INPUT LIMPIO
+  /* =========================
+       CHAT INPUT FINAL
     ========================= */
     
-    [data-testid="stChatInput"] {
+    [data-testid="stBottom"] {
         background: #f7f7f7 !important;
-        padding: 1rem 2rem !important;
+        border-top: 1px solid #e5e7eb !important;
+        padding: 0.8rem 2rem !important;
     }
     
-    [data-testid="stChatInput"] > div {
-        max-width: 980px !important;
+    [data-testid="stBottom"] > div {
+        max-width: 1050px !important;
         margin: 0 auto !important;
+    }
+    
+    [data-testid="stChatInput"] {
         background: transparent !important;
     }
     
-    [data-testid="stChatInput"] textarea {
-        width: 100% !important;
-        min-height: 48px !important;
-    
-        background: #ffffff !important;
-        color: #111827 !important;
-    
-        border: 1px solid #d1d5db !important;
-        border-radius: 999px !important;
-    
-        padding: 0.75rem 1rem !important;
-    
-        font-size: 0.92rem !important;
-    
-        box-shadow: 0 2px 10px rgba(0,0,0,0.08) !important;
+    [data-testid="stChatInput"] > div {
+        background: transparent !important;
     }
     
-    [data-testid="stChatInput"] textarea::placeholder {
-        color: #9ca3af !important;
+    [data-baseweb="textarea"] {
+        border-radius: 999px !important;
+        border: 1px solid #d1d5db !important;
+        background: white !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+    }
+    
+    [data-baseweb="textarea"] textarea {
+        color: #111827 !important;
+        font-size: 0.95rem !important;
+        padding-top: 0.85rem !important;
     }
     
     [data-testid="stChatInput"] button {
@@ -569,7 +564,7 @@ st.markdown(
         color: white !important;
         border-radius: 999px !important;
     }
-    
+
     /* =========================
        MENSAJES CHAT
     ========================= */
