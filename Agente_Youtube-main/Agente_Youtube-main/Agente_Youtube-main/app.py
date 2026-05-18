@@ -58,144 +58,6 @@ except Exception as e:
 
 
 # =========================
-# 4. ESTILOS VISUALES
-# =========================
-
-st.markdown(
-    """
-    <style>
-    .block-container {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-        max-width: 950px;
-    }
-
-    .main-title {
-        font-size: 2.3rem;
-        font-weight: 800;
-        line-height: 1.1;
-        margin-bottom: 0.3rem;
-    }
-
-    .subtitle {
-        font-size: 1rem;
-        color: #64748b;
-        margin-bottom: 1.5rem;
-    }
-
-    .info-box {
-        background-color: #f8fafc;
-        padding: 1rem;
-        border-radius: 0.8rem;
-        border: 1px solid #e2e8f0;
-        margin-bottom: 1.2rem;
-    }
-
-    .small-text {
-        color: #64748b;
-        font-size: 0.9rem;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-
-# =========================
-# 5. ENCABEZADO
-# =========================
-
-st.markdown(
-    '<div class="main-title">📊 Agente Inteligente para YouTube</div>',
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    """
-    <div class="subtitle">
-    Consulta información del canal usando lenguaje natural. 
-    El agente recupera datos desde BigQuery, analiza métricas y genera respuestas con Gemini.
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-
-# =========================
-# 6. SIDEBAR
-# =========================
-
-with st.sidebar:
-    st.title("⚙️ Panel del agente")
-
-    st.markdown("### Fuente de datos")
-    st.markdown(
-        """
-        **Proyecto:** `mineria-datos-493000`  
-        **Dataset:** `youtube`  
-        **Tabla:** `fact_final`
-        """
-    )
-
-    st.markdown("---")
-
-    st.markdown("### Probar conexión")
-
-    if st.button("Probar BigQuery"):
-        with st.spinner("Verificando conexión con BigQuery..."):
-            try:
-                info = retriever.test_connection()
-                st.success("✅ Conexión exitosa")
-
-                st.write("**Tabla:**", info["tabla"])
-                st.write("**Filas:**", info["filas"])
-                st.write("**Columnas:**", info["columnas"])
-
-            except Exception as e:
-                st.error("❌ No se pudo conectar con BigQuery.")
-                st.exception(e)
-
-    st.markdown("---")
-
-    st.markdown("### Preguntas sugeridas")
-
-    st.markdown(
-        """
-        - ¿Cuál es el resumen del canal?
-        - ¿Qué videos tienen más views?
-        - ¿Qué temas tienen mejor interacción?
-        - ¿En qué video hablaron de productividad?
-        - ¿Qué mejorarías del canal?
-        - ¿Qué videos rindieron peor de lo esperado?
-        """
-    )
-
-    st.markdown("---")
-
-    if st.button("Limpiar conversación"):
-        st.session_state.messages = []
-        st.rerun()
-
-
-# =========================
-# 7. MENSAJE INFORMATIVO
-# =========================
-
-st.markdown(
-    """
-    <div class="info-box">
-        <b>¿Qué puede hacer este agente?</b><br>
-        <span class="small-text">
-        Puede responder sobre videos, métricas, temas, transcripciones, ranking de contenido,
-        recomendaciones y predicciones de rendimiento del canal.
-        </span>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-
-# =========================
 # 8. MEMORIA DE CONVERSACIÓN
 # =========================
 
@@ -212,63 +74,31 @@ if "messages" not in st.session_state:
     ]
 
 
-# =========================
-# 9. MOSTRAR HISTORIAL
-# =========================
+import streamlit as st
+import streamlit.components.v1 as components
 
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+from agent import agent
 
-
-# =========================
-# 10. CAPTURAR PREGUNTA DEL USUARIO
-# =========================
-
-prompt = st.chat_input(
-    "Ej: ¿Qué temas tienen mejor interacción en el canal?"
+st.set_page_config(
+    page_title="Agente YouTube",
+    layout="wide"
 )
 
+# Leer HTML
+with open("interfaz_agente_yt.html", "r", encoding="utf-8") as f:
+    html_code = f.read()
+
+# Renderizar HTML
+components.html(
+    html_code,
+    height=1000,
+    scrolling=False
+)
+
+# Backend oculto
+prompt = st.chat_input("Pregunta al agente")
+
 if prompt:
-    # Mostrar mensaje del usuario
-    st.chat_message("user").markdown(prompt)
+    respuesta = agent.answer(prompt)
 
-    st.session_state.messages.append(
-        {
-            "role": "user",
-            "content": prompt
-        }
-    )
-
-    # Generar respuesta del agente
-    with st.chat_message("assistant"):
-        with st.spinner("Consultando BigQuery y generando respuesta..."):
-            try:
-                respuesta_texto = agent.answer(prompt)
-
-                st.markdown(respuesta_texto)
-
-                st.session_state.messages.append(
-                    {
-                        "role": "assistant",
-                        "content": respuesta_texto
-                    }
-                )
-
-            except Exception as e:
-                mensaje_error = (
-                    "**Ocurrió un error al procesar tu pregunta:**\n\n"
-                    f"`{str(e)}`\n\n"
-                    "Revisa que tus Secrets estén configurados correctamente "
-                    "y que la cuenta de servicio tenga permisos para BigQuery."
-                )
-
-                st.error(mensaje_error)
-                st.exception(e)
-
-                st.session_state.messages.append(
-                    {
-                        "role": "assistant",
-                        "content": mensaje_error
-                    }
-                )
+    st.write(respuesta)
