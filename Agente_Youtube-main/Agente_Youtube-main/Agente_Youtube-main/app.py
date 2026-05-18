@@ -450,7 +450,14 @@ st.markdown(
         line-height: 1.5;
         color: #6b7280;
     }
-    
+
+    .welcome-tags-text {
+        margin-top: 1rem;
+        color: #374151;
+        font-size: 0.78rem;
+        font-weight: 600;
+    }
+        
 
     </style>
     """,
@@ -548,35 +555,10 @@ with st.sidebar:
 # 7. MENSAJE INFORMATIVO
 # =========================
 
-st.markdown("""
-<div class="welcome-card">
-
-    <div class="welcome-top">
-
-        <div class="welcome-icon">✨</div>
-
-        <div>
-            <div class="welcome-title">
-                ¿Qué puede hacer este agente?
-            </div>
-
-            <div class="welcome-subtitle">
-                Consulta métricas, rendimiento, temas, transcripciones y recomendaciones del canal usando lenguaje natural.
-            </div>
-        </div>
-
-    </div>
-
-    <p class="welcome-tags">
-    📊 Analytics &nbsp;&nbsp;
-    🎬 Videos &nbsp;&nbsp;
-    🔥 Engagement &nbsp;&nbsp;
-    🧠 Gemini AI &nbsp;&nbsp;
-    📈 Predicciones
-    </p>
-
-</div>
-""", unsafe_allow_html=True)
+st.markdown(
+    '<div class="welcome-card"><div class="welcome-top"><div class="welcome-icon">✨</div><div><div class="welcome-title">¿Qué puede hacer este agente?</div><div class="welcome-subtitle">Consulta métricas, rendimiento, temas, transcripciones y recomendaciones del canal usando lenguaje natural.</div></div></div><div class="welcome-tags-text">📊 Analytics &nbsp;&nbsp; 🎬 Videos &nbsp;&nbsp; 🔥 Engagement &nbsp;&nbsp; 🧠 Gemini AI &nbsp;&nbsp; 📈 Predicciones</div></div>',
+    unsafe_allow_html=True
+)
 
 
 # =========================
