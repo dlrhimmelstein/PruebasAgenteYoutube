@@ -665,11 +665,6 @@ for message in st.session_state.messages:
 # =========================
 prompt = st.chat_input("Pregunta sobre el canal… ej: ¿De qué hablaron en el episodio 40?")
 
-st.markdown(
-    '<div class="yt-input-footer">El agente consulta BigQuery en tiempo real · Respuestas basadas en datos reales</div>',
-    unsafe_allow_html=True
-)
-
 if "prompt_sugerido" in st.session_state:
     prompt = st.session_state.prompt_sugerido
     del st.session_state.prompt_sugerido
