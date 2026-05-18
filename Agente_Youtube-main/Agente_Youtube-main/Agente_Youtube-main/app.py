@@ -616,24 +616,80 @@ st.markdown(
 # =========================
 # 8. MEMORIA DE CONVERSACIÓN
 # =========================
+# Reemplaza tu bloque actual de "if messages not in session_state"
 
 if "messages" not in st.session_state:
-    st.session_state.messages = [
-        {
-            "role": "assistant",
-            "content": (
-                "Hola 👋 Soy tu agente de análisis de YouTube. "
-                "Puedes preguntarme sobre métricas, videos, temas, transcripciones "
-                "y recomendaciones del canal."
-            )
-        }
-    ]
+    st.session_state.messages = []
 
 
 # =========================
 # 9. MOSTRAR HISTORIAL
 # =========================
 
+# Pantalla de bienvenida: solo se muestra si no hay mensajes aún
+if not st.session_state.messages:
+    st.markdown("""
+    <style>
+    .yt-welcome {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 60px 20px 40px;
+    }
+    .yt-welcome-icon {
+        width: 64px;
+        height: 64px;
+        background: #ff0000;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 14px rgba(255,0,0,0.25);
+    }
+    .yt-welcome-icon svg {
+        width: 34px;
+        height: 34px;
+        fill: white;
+    }
+    .yt-welcome-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #0f0f0f;
+        margin-bottom: 12px;
+        font-family: 'Segoe UI', sans-serif;
+    }
+    .yt-welcome-desc {
+        font-size: 14px;
+        color: #606060;
+        max-width: 420px;
+        line-height: 1.7;
+        font-family: 'Segoe UI', sans-serif;
+    }
+    .yt-welcome-desc b {
+        color: #0f0f0f;
+        font-weight: 600;
+    }
+    </style>
+
+    <div class="yt-welcome">
+        <div class="yt-welcome-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19.59 7a2.5 2.5 0 0 0-1.76-1.76C16.46 5 12 5 12 5s-4.46 0-5.83.24A2.5 2.5 0 0 0 4.41 7 26 26 0 0 0 4.17 12a26 26 0 0 0 .24 5 2.5 2.5 0 0 0 1.76 1.76C7.54 19 12 19 12 19s4.46 0 5.83-.24A2.5 2.5 0 0 0 19.59 17 26 26 0 0 0 19.83 12a26 26 0 0 0-.24-5zM10 15v-6l5 3-5 3z"/>
+            </svg>
+        </div>
+        <div class="yt-welcome-title">Hola, soy tu agente de YouTube</div>
+        <div class="yt-welcome-desc">
+            Puedo analizar el rendimiento de <b>Las Damitas Histeria</b>, encontrar en
+            qué episodio hablaron de un tema, decirte los mejores días para
+            publicar y mucho más. ¡Pregúntame lo que necesites!
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+# Mostrar historial de mensajes (cuando ya hay conversación)
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
