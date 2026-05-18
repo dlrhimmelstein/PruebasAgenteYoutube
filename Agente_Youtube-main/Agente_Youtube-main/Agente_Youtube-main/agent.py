@@ -7,8 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1ZoMniPTJamwBQlQJN7J4Q2vryKk-eqUI
 """
 
-!pip install google-cloud-bigquery pandas google-genai numpy
-
 """#**INICIAL**"""
 
 from google.colab import auth, userdata
