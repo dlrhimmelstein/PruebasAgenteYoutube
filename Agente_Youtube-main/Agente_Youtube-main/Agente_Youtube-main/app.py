@@ -528,9 +528,21 @@ st.markdown(
     ========================= */
     
     [data-testid="stBottom"] {
-        background: #ffffff !important;
+    
+        background-color: #f1f3f4 !important;
+    
+        background-image: none !important;
+    
         border-top: 1px solid #e5e7eb !important;
+    
         padding: 0.8rem 2rem !important;
+    
+        box-shadow: none !important;
+    }
+
+    [data-testid="stBottom"]::before,
+    [data-testid="stBottom"]::after {
+        display: none !important;
     }
     
     [data-testid="stBottom"] > div {
