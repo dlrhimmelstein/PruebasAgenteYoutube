@@ -23,7 +23,13 @@ if "GOOGLE_API_KEY" not in os.environ:
 
 from agent import agent
 
-with open("interfaz_agente_yt.html", "r", encoding="utf-8") as f:
+from pathlib import Path
+
+BASE_DIR = Path(__file__).parent
+
+html_path = BASE_DIR / "interfaz_agente_yt.html"
+
+with open(html_path, "r", encoding="utf-8") as f:
     html_code = f.read()
 
 components.html(
