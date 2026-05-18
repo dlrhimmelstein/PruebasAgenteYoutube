@@ -1,0 +1,7 @@
+streamlit>=1.32.0
+google-cloud-bigquery
+google-auth
+google-genai
+db-dtypes
+pandas
+python-dotenv
