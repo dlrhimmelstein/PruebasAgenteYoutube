@@ -65,42 +65,106 @@ except Exception as e:
 st.markdown(
     """
     <style>
-    .block-container {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-        max-width: 950px;
+    /* Fondo general */
+    .stApp {
+        background-color: #f7f7f7;
+        color: #0f0f0f;
     }
 
+    /* Contenedor principal */
+    .block-container {
+        padding-top: 1.2rem;
+        padding-bottom: 6rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        max-width: 100%;
+    }
+
+    /* Tipografía general */
+    html, body, [class*="css"] {
+        font-family: "Inter", "Segoe UI", sans-serif;
+    }
+
+    /* Título superior */
     .main-title {
-        font-size: 2.3rem;
+        font-size: 1.45rem;
         font-weight: 800;
         line-height: 1.1;
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.15rem;
+        color: #0f0f0f;
     }
 
     .subtitle {
-        font-size: 1rem;
-        color: #64748b;
-        margin-bottom: 1.5rem;
+        font-size: 0.82rem;
+        color: #6b7280;
+        margin-bottom: 0;
     }
 
+    /* Caja informativa */
     .info-box {
-        background-color: #f8fafc;
-        padding: 1rem;
-        border-radius: 0.8rem;
-        border: 1px solid #e2e8f0;
+        background-color: #ffffff;
+        padding: 1rem 1.2rem;
+        border-radius: 18px;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
         margin-bottom: 1.2rem;
+        color: #374151;
     }
 
     .small-text {
-        color: #64748b;
-        font-size: 0.9rem;
+        color: #6b7280;
+        font-size: 0.85rem;
+    }
+
+    /* Botones */
+    .stButton > button {
+        border-radius: 999px;
+        border: 1px solid #d1d5db;
+        background-color: #ffffff;
+        color: #374151;
+        font-weight: 600;
+        padding: 0.45rem 0.9rem;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        transition: all 0.2s ease;
+    }
+
+    .stButton > button:hover {
+        background-color: #f1f1f1;
+        border-color: #c7c7c7;
+        color: #0f0f0f;
+        transform: translateY(-1px);
+    }
+
+    /* Input inferior */
+    .stChatInput textarea {
+        background-color: #ffffff !important;
+        color: #0f0f0f !important;
+        border-radius: 999px !important;
+        border: 1px solid #d1d5db !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    /* Mensajes del chat */
+    [data-testid="stChatMessage"] {
+        background: transparent;
+    }
+
+    [data-testid="stChatMessageContent"] {
+        color: #0f0f0f;
+    }
+
+    /* Ocultar menú superior de Streamlit si molesta */
+    #MainMenu {
+        visibility: hidden;
+    }
+
+    footer {
+        visibility: hidden;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
-
 
 # =========================
 # 5. ENCABEZADO
