@@ -391,6 +391,92 @@ st.markdown(
         color: #059669;
     }
 
+    /* =========================
+       WELCOME CARD
+    ========================= */
+    
+    .welcome-card {
+        background: #ffffff;
+    
+        border: 1px solid #e5e7eb;
+    
+        border-radius: 22px;
+    
+        padding: 1.2rem 1.3rem;
+    
+        margin-bottom: 1.4rem;
+    
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    
+    .welcome-top {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .welcome-icon {
+        width: 42px;
+        height: 42px;
+    
+        border-radius: 14px;
+    
+        background: linear-gradient(
+            135deg,
+            #ff0033,
+            #ff4d6d
+        );
+    
+        color: white;
+    
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    
+        font-size: 1rem;
+    
+        flex-shrink: 0;
+    }
+    
+    .welcome-title {
+        font-size: 1rem;
+        font-weight: 800;
+        color: #0f0f0f;
+        margin-bottom: 0.25rem;
+    }
+    
+    .welcome-subtitle {
+        font-size: 0.82rem;
+        line-height: 1.5;
+        color: #6b7280;
+    }
+    
+    .welcome-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+    
+        margin-top: 1rem;
+    }
+    
+    .welcome-tag {
+        background: #f3f4f6;
+    
+        border: 1px solid #e5e7eb;
+    
+        border-radius: 999px;
+    
+        padding:
+            0.4rem
+            0.8rem;
+    
+        font-size: 0.74rem;
+    
+        font-weight: 600;
+    
+        color: #374151;
+    }
+
     </style>
     """,
     unsafe_allow_html=True
@@ -489,12 +575,36 @@ with st.sidebar:
 
 st.markdown(
     """
-    <div class="info-box">
-        <b>¿Qué puede hacer este agente?</b><br>
-        <span class="small-text">
-        Puede responder sobre videos, métricas, temas, transcripciones, ranking de contenido,
-        recomendaciones y predicciones de rendimiento del canal.
-        </span>
+    <div class="welcome-card">
+
+        <div class="welcome-top">
+            <div class="welcome-icon">✨</div>
+
+            <div>
+                <div class="welcome-title">
+                    ¿Qué puede hacer este agente?
+                </div>
+
+                <div class="welcome-subtitle">
+                    Consulta métricas, rendimiento, temas, transcripciones y recomendaciones del canal usando lenguaje natural.
+                </div>
+            </div>
+        </div>
+
+        <div class="welcome-tags">
+
+            <div class="welcome-tag">📊 Analytics</div>
+
+            <div class="welcome-tag">🎬 Videos</div>
+
+            <div class="welcome-tag">🔥 Engagement</div>
+
+            <div class="welcome-tag">🧠 Gemini AI</div>
+
+            <div class="welcome-tag">📈 Predicciones</div>
+
+        </div>
+
     </div>
     """,
     unsafe_allow_html=True
