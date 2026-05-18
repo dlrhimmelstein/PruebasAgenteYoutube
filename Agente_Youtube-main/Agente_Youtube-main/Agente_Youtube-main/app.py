@@ -501,32 +501,28 @@ st.markdown(
        BIENVENIDA INICIAL
     ========================= */
     
-    .empty-welcome {
+   .empty-logo,
+    .empty-title,
+    .empty-text {
         max-width: 560px;
-        margin: 4rem auto 2rem auto;
+        margin-left: auto;
+        margin-right: auto;
         text-align: center;
     }
     
     .empty-logo {
         width: 64px;
         height: 48px;
-    
-        margin:
-            0 auto
-            1.2rem auto;
-    
+        margin-top: 4rem;
+        margin-bottom: 1.2rem;
         background: #ff0000;
         color: white;
-    
         border-radius: 16px;
-    
         display: flex;
         align-items: center;
         justify-content: center;
-    
         font-size: 1.2rem;
         font-weight: 800;
-    
         box-shadow: 0 8px 20px rgba(255,0,0,0.25);
     }
     
@@ -534,14 +530,12 @@ st.markdown(
         font-size: 1.35rem;
         font-weight: 800;
         color: #111827;
-    
         margin-bottom: 0.8rem;
     }
     
     .empty-text {
         font-size: 0.95rem;
         line-height: 1.6;
-    
         color: #4b5563;
     }
 
@@ -659,25 +653,12 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 
 if len(st.session_state.messages) == 0:
-
-    welcome_html = """
-    <div class='empty-welcome'>
-        <div class='empty-logo'>▶</div>
-
-        <div class='empty-title'>
-            Hola, soy tu agente de YouTube
-        </div>
-
-        <div class='empty-text'>
-            Puedo analizar el rendimiento de <b>Las Damitas Histeria</b>,
-            encontrar en qué episodio hablaron de un tema,
-            decirte los mejores días para publicar y mucho más.
-            ¡Pregúntame lo que necesites!
-        </div>
-    </div>
-    """
-
-    st.markdown(welcome_html, unsafe_allow_html=True)
+    st.markdown('<div class="empty-logo">▶</div>', unsafe_allow_html=True)
+    st.markdown('<div class="empty-title">Hola, soy tu agente de YouTube</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="empty-text">Puedo analizar el rendimiento de <b>Las Damitas Histeria</b>, encontrar en qué episodio hablaron de un tema, decirte los mejores días para publicar y mucho más. ¡Pregúntame lo que necesites!</div>',
+        unsafe_allow_html=True
+    )
 
 
 # =========================
