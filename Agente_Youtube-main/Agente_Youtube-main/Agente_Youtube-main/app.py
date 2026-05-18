@@ -301,18 +301,6 @@ st.markdown("""
 
 
 
-# filtro_activo es una lista con los chips seleccionados.
-# Úsala donde construyas el prompt o donde filtres los resultados, por ejemplo:
-
-if filtro_activo:
-    contexto_filtros = f"Filtra la respuesta considerando solo: {', '.join(filtro_activo)}."
-else:
-    contexto_filtros = ""
-
-# Luego, cuando construyas el prompt para el agente, agrégalo así:
-# prompt_final = f"{contexto_filtros} {prompt}".strip()
-
-
 # =========================
 # SIDEBAR TIPO YOUTUBE
 # =========================
