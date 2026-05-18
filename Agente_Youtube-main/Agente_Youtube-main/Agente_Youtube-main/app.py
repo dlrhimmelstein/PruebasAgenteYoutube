@@ -298,18 +298,37 @@ st.markdown(
 st.markdown(
     """
     <div class="yt-header">
+
         <div class="yt-header-left">
-            <div class="yt-logo">▶</div>
-            <div>
-                <div class="yt-title">Las Damitas Histeria</div>
-                <div class="yt-subtitle">Agente de análisis · Powered by Gemini</div>
+
+            <div class="yt-logo">
+                ▶
             </div>
+
+            <div>
+                <div class="yt-title">
+                    Las Damitas Histeria
+                </div>
+
+                <div class="yt-subtitle">
+                    Agente de análisis · Powered by Gemini
+                </div>
+            </div>
+
         </div>
 
         <div class="yt-header-right">
-            <div class="yt-pill">🟢 Gemini conectado</div>
-            <div class="yt-pill">📊 299 videos</div>
+
+            <div class="yt-pill">
+                🟢 Gemini conectado
+            </div>
+
+            <div class="yt-pill">
+                📊 299 videos
+            </div>
+
         </div>
+
     </div>
     """,
     unsafe_allow_html=True
