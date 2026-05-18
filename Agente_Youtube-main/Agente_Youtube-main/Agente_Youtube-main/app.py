@@ -233,17 +233,6 @@ st.markdown(
        CHAT INPUT
     ========================= */
 
-    .stChatInput textarea {
-        background-color: #ffffff !important;
-
-        color: #0f0f0f !important;
-
-        border-radius: 999px !important;
-
-        border: 1px solid #d1d5db !important;
-
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
 
     /* =========================
        MENSAJES CHAT
@@ -544,33 +533,35 @@ st.markdown(
     ========================= */
     
     [data-testid="stChatInput"] {
-        position: fixed;
-        bottom: 1.2rem;
-        left: 340px;
-        right: 2rem;
-        z-index: 999;
+        background: #ffffff !important;
+        border-top: 1px solid #e5e7eb !important;
+        padding: 0.9rem 2rem 1rem 2rem !important;
     }
     
     [data-testid="stChatInput"] > div {
-        background: transparent;
-        border: none;
+        max-width: 1000px;
+        margin: 0 auto;
+        background: transparent !important;
     }
     
     [data-testid="stChatInput"] textarea {
         background: #ffffff !important;
-    
-        border: 1px solid #dcdcdc !important;
-    
-        border-radius: 18px !important;
-    
         color: #111827 !important;
     
-        font-size: 0.95rem !important;
+        border: 1px solid #d1d5db !important;
+        border-radius: 999px !important;
     
-        padding-top: 0.9rem !important;
+        min-height: 46px !important;
     
-        box-shadow:
-            0 4px 20px rgba(0,0,0,0.08) !important;
+        padding: 0.75rem 1rem !important;
+    
+        font-size: 0.92rem !important;
+    
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08) !important;
+    }
+    
+    [data-testid="stChatInput"] textarea::placeholder {
+        color: #9ca3af !important;
     }
     
     /* =========================
