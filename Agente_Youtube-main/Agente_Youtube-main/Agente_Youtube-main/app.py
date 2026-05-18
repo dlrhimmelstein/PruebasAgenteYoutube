@@ -497,6 +497,54 @@ st.markdown(
         border-radius: 6px;
     }
 
+    /* =========================
+       BIENVENIDA INICIAL
+    ========================= */
+    
+    .empty-welcome {
+        max-width: 560px;
+        margin: 4rem auto 2rem auto;
+        text-align: center;
+    }
+    
+    .empty-logo {
+        width: 64px;
+        height: 48px;
+    
+        margin:
+            0 auto
+            1.2rem auto;
+    
+        background: #ff0000;
+        color: white;
+    
+        border-radius: 16px;
+    
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    
+        font-size: 1.2rem;
+        font-weight: 800;
+    
+        box-shadow: 0 8px 20px rgba(255,0,0,0.25);
+    }
+    
+    .empty-title {
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: #111827;
+    
+        margin-bottom: 0.8rem;
+    }
+    
+    .empty-text {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    
+        color: #4b5563;
+    }
+
     </style>
     """,
     unsafe_allow_html=True
@@ -608,16 +656,30 @@ st.markdown(
 # =========================
 
 if "messages" not in st.session_state:
-    st.session_state.messages = [
-        {
-            "role": "assistant",
-            "content": (
-                "Hola 👋 Soy tu agente de análisis de YouTube. "
-                "Puedes preguntarme sobre métricas, videos, temas, transcripciones "
-                "y recomendaciones del canal."
-            )
-        }
-    ]
+    st.session_state.messages = []
+
+# Bienvenida inicial
+if len(st.session_state.messages) == 0:
+    st.markdown("""
+    <div class="empty-welcome">
+
+        <div class="empty-logo">
+            ▶
+        </div>
+
+        <div class="empty-title">
+            Hola, soy tu agente de YouTube
+        </div>
+
+        <div class="empty-text">
+            Puedo analizar el rendimiento de <b>Las Damitas Histeria</b>,
+            encontrar en qué episodio hablaron de un tema,
+            decirte los mejores días para publicar y mucho más.
+            ¡Pregúntame lo que necesites!
+        </div>
+
+    </div>
+    """, unsafe_allow_html=True)
 
 
 # =========================
