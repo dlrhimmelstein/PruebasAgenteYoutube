@@ -460,19 +460,6 @@ with st.sidebar:
 
     st.markdown('<div class="sidebar-divider"></div>', unsafe_allow_html=True)
 
-    st.markdown(
-        """
-        <div class="data-card">
-            <div><b>Proyecto</b><span>mineria-datos-493000</span></div>
-            <div><b>Dataset</b><span>youtube</span></div>
-            <div><b>Tabla</b><span>fact_final</span></div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    st.markdown('<div class="sidebar-divider"></div>', unsafe_allow_html=True)
-
     st.markdown('<div class="sidebar-section-title">PROBAR CONEXIÓN</div>', unsafe_allow_html=True)
 
     if st.button("Probar BigQuery", use_container_width=True):
