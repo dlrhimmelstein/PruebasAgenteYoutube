@@ -11,7 +11,8 @@ import streamlit as st
 st.set_page_config(
     page_title="Agente YouTube Analytics",
     page_icon="📊",
-    layout="centered"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 
@@ -222,80 +223,73 @@ st.markdown("""
 st.markdown("""
 <style>
 
+/* App completa */
+[data-testid="stAppViewContainer"] {
+    background: #f0f0f0;
+}
+
+/* Contenedor principal */
+.main .block-container {
+    max-width: 1200px;
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+}
+
+/* Sidebar fijo */
 section[data-testid="stSidebar"] {
-    background: #ebebeb;
-    border-right: 1px solid #d9d9d9;
+    width: 320px !important;
+    min-width: 320px !important;
+    max-width: 320px !important;
 }
 
-/* Título */
-.sidebar-title {
-    color: #282828;
-    font-size: 26px;
-    font-weight: 800;
-    margin-bottom: 24px;
+/* Evita cambios raros del sidebar */
+section[data-testid="stSidebar"] > div {
+    width: 320px !important;
 }
 
-/* Subtítulos */
-.sidebar-subtitle {
-    color: #888888;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 22px;
-    margin-bottom: 12px;
-    font-weight: 700;
+/* Chat centrado */
+[data-testid="stChatMessageContainer"] {
+    max-width: 850px;
+    margin: auto;
 }
 
-/* Botones */
-div.stButton > button {
-    width: 100%;
+/* Input fijo abajo */
+[data-testid="stChatInput"] {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-35%);
+    width: 700px;
+    z-index: 999;
     background: transparent;
-    border: none;
-    border-radius: 12px;
-    padding: 10px 12px;
-    text-align: left;
-    transition: 0.15s;
-    margin-bottom: 4px;
 }
 
-/* Hover */
-div.stButton > button:hover {
-    background: rgba(40,40,40,0.06);
+/* Caja del input */
+[data-testid="stChatInput"] textarea {
+    border-radius: 20px !important;
+    border: 1px solid #d0d0d0 !important;
+    background: white !important;
+    padding-top: 12px !important;
 }
 
-/* Texto del botón */
-div.stButton > button p {
-    color: #282828 !important;
-    font-size: 14px !important;
-    font-weight: 600 !important;
+/* Evita que el contenido choque con el input */
+.main .block-container {
+    padding-bottom: 120px;
 }
 
-/* Cards métricas */
-.sidebar-card {
-    background: #f7f7f7;
-    border: 1px solid #dddddd;
-    border-radius: 14px;
-    padding: 14px;
-    margin-bottom: 10px;
+/* Scroll suave */
+html {
+    scroll-behavior: smooth;
 }
 
-/* Labels */
-.metric-label {
-    color: #888888;
-    font-size: 12px;
+/* Ocultar footer streamlit */
+footer {
+    visibility: hidden;
 }
 
-/* Valores */
-.metric-value {
-    color: #282828;
-    font-size: 20px;
-    font-weight: 700;
-    margin-top: 4px;
-}
-
-/* Divider */
-hr {
-    border-color: #dcdcdc !important;
+/* Ocultar menú */
+#MainMenu {
+    visibility: hidden;
 }
 
 </style>
