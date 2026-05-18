@@ -216,12 +216,84 @@ st.markdown("""
 
 
 # =========================
-# 6. SIDEBAR
+# SIDEBAR TIPO YOUTUBE
 # =========================
 
 with st.sidebar:
 
-    st.markdown("## ⚙️ Panel del agente")
+    st.markdown("""
+    <style>
+
+    section[data-testid="stSidebar"] {
+        background: #1f1f2e;
+        border-right: 1px solid #2b2b3d;
+    }
+
+    .sidebar-title {
+        color: white;
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 18px;
+    }
+
+    .sidebar-subtitle {
+        color: #a1a1b5;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .sidebar-card {
+        background: #2a2a3d;
+        border-radius: 14px;
+        padding: 14px;
+        margin-bottom: 10px;
+        border: 1px solid #34344a;
+    }
+
+    .metric-label {
+        color: #b8b8c7;
+        font-size: 13px;
+    }
+
+    .metric-value {
+        color: white;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    div.stButton > button {
+        width: 100%;
+        background: #2a2a3d;
+        color: white;
+        border: 1px solid #3a3a52;
+        border-radius: 12px;
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+    div.stButton > button:hover {
+        background: #34344a;
+        border: 1px solid #4b4b66;
+        color: white;
+    }
+
+    </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown(
+        '<div class="sidebar-title">⚙️ Panel del agente</div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        '<div class="sidebar-subtitle">Accesos rápidos</div>',
+        unsafe_allow_html=True
+    )
 
     if st.button("🏆 Top videos"):
         st.session_state.prompt_sugerido = (
@@ -230,13 +302,63 @@ with st.sidebar:
 
     if st.button("📅 Mejor día para publicar"):
         st.session_state.prompt_sugerido = (
-            "¿Qué días son mejores para publicar?"
+            "¿Qué días de la semana son mejores para publicar?"
         )
 
     if st.button("🎯 Temas más exitosos"):
         st.session_state.prompt_sugerido = (
-            "¿Qué temas tienen más engagement?"
+            "¿Qué temas tienen mejor engagement?"
         )
+
+    if st.button("📈 Resumen del canal"):
+        st.session_state.prompt_sugerido = (
+            "Dame un resumen general del canal"
+        )
+
+    if st.button("🎬 Formatos que funcionan"):
+        st.session_state.prompt_sugerido = (
+            "¿Qué formatos funcionan mejor en el canal?"
+        )
+
+    if st.button("❤️ Mayor engagement"):
+        st.session_state.prompt_sugerido = (
+            "¿Qué videos tienen mayor engagement?"
+        )
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    st.markdown(
+        '<div class="sidebar-subtitle">Canal al día</div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown("""
+    <div class="sidebar-card">
+        <div class="metric-label">Videos</div>
+        <div class="metric-value">299</div>
+    </div>
+
+    <div class="sidebar-card">
+        <div class="metric-label">Views totales</div>
+        <div class="metric-value">16.7M</div>
+    </div>
+
+    <div class="sidebar-card">
+        <div class="metric-label">Likes totales</div>
+        <div class="metric-value">716K</div>
+    </div>
+
+    <div class="sidebar-card">
+        <div class="metric-label">Comentarios</div>
+        <div class="metric-value">34.8K</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.divider()
+
+    if st.button("🗑️ Limpiar conversación"):
+        st.session_state.messages = []
+        st.rerun()
 
 
 # =========================
