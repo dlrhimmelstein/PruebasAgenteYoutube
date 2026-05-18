@@ -131,6 +131,37 @@ html, body, [class*="css"] {
 """, unsafe_allow_html=True)
 
 # =========================
+# 4. ESTILOS VISUALES
+# =========================
+
+st.markdown("""
+<style>
+
+/* TODO tu CSS grande aquí */
+
+</style>
+""", unsafe_allow_html=True)
+
+
+# ESTE VA JUSTO DEBAJO ↓↓↓
+
+st.markdown("""
+<style>
+.stMarkdown, .stChatMessage, p, div {
+    color: #282828;
+}
+
+[data-testid="stChatMessage"] {
+    background: transparent;
+}
+
+[data-testid="stChatMessageContent"] {
+    color: #282828;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# =========================
 # 5. ENCABEZADO
 # =========================
 
@@ -165,7 +196,6 @@ st.markdown("""
     </div>
 </div>
 """, unsafe_allow_html=True)
-
 
 # =========================
 # 6. SIDEBAR
