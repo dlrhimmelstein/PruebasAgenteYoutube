@@ -528,7 +528,7 @@ st.markdown(
     ========================= */
     
     [data-testid="stBottom"] {
-        background: #000000 !important;
+        background: #ffffff !important;
         border-top: 1px solid #e5e7eb !important;
         padding: 0.8rem 2rem !important;
     }
