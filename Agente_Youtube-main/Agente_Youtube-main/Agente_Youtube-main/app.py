@@ -3,9 +3,11 @@
 import os
 import streamlit as st
 
+
 # =========================
 # 1. CONFIGURACIÓN DE PÁGINA
 # =========================
+# Debe ser el primer comando de Streamlit.
 st.set_page_config(
     page_title="Las Damitas Histeria | Agente YouTube",
     page_icon="▶️",
@@ -13,29 +15,41 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+
 # =========================
 # 2. CARGA SEGURA DE CREDENCIALES
 # =========================
+# Esto permite que funcione tanto localmente con .env
+# como en Streamlit Cloud con st.secrets.
+
 try:
     from dotenv import load_dotenv
     load_dotenv()
 except ImportError:
     pass
 
+
+# Si existe GOOGLE_API_KEY en Streamlit Secrets,
+# también la mandamos a variables de entorno por compatibilidad.
 if "GOOGLE_API_KEY" in st.secrets:
     os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
+
 
 if "GOOGLE_API_KEY" not in os.environ or not os.environ["GOOGLE_API_KEY"]:
     st.error("🚨 Error crítico: No se encontró GOOGLE_API_KEY en Secrets o en el archivo .env.")
     st.stop()
 
+
 if "gcp_service_account" not in st.secrets:
     st.error("🚨 Error crítico: No se encontró gcp_service_account en Streamlit Secrets.")
     st.stop()
 
+
 # =========================
 # 3. IMPORTACIÓN DEL AGENTE
 # =========================
+# Ya no usamos ADK.
+# Importamos el agente RAG propio definido en agent.py.
 try:
     from agent import agent, retriever
 except Exception as e:
@@ -43,601 +57,570 @@ except Exception as e:
     st.exception(e)
     st.stop()
 
+
 # =========================
-# 4. ESTILOS VISUALES (diseño del HTML integrado)
+# 4. ESTILOS VISUALES
 # =========================
-st.markdown("""
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
 
-  :root {
-    --bg-base:       #F0F0F0;
-    --bg-surface:    #F7F7F7;
-    --bg-card:       #FFFFFF;
-    --bg-sidebar:    #EBEBEB;
-    --bg-header:     #FFFFFF;
-    --border:        #E0E0E0;
-    --border-dark:   #CCCCCC;
-    --text-primary:  #282828;
-    --text-secondary:#666666;
-    --text-muted:    #999999;
-    --yt-red:        #E8001C;
-    --yt-red-soft:   #FFF0F0;
-    --yt-red-mid:    #FFDDDD;
-    --user-bubble:   #1A56A8;
-    --font-main:     'DM Sans', system-ui, sans-serif;
-    --radius-sm:     8px;
-    --radius-md:     12px;
-    --radius-lg:     18px;
-    --shadow-xs:     0 1px 3px rgba(40,40,40,0.06);
-    --shadow-sm:     0 2px 8px rgba(40,40,40,0.08);
-    --shadow-md:     0 4px 16px rgba(40,40,40,0.10);
-  }
+st.markdown(
+    """
+    <style>
 
-  html, body, [class*="css"] {
-    font-family: var(--font-main) !important;
-    background-color: var(--bg-base) !important;
-    color: var(--text-primary) !important;
-  }
+    /* =========================
+       FONDO GENERAL
+    ========================= */
 
-  /* ── Ocultar elementos Streamlit ── */
-  #MainMenu { visibility: hidden; }
-  footer    { visibility: hidden; }
-  header    { visibility: hidden; }
+    .stApp {
+        background-color: #f7f7f7;
+        color: #0f0f0f;
+    }
 
-  /* ── Contenedor principal ── */
-  .block-container {
-    padding-top: 0 !important;
-    padding-bottom: 6rem;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    max-width: 100% !important;
-  }
+    /* =========================
+       CONTENEDOR PRINCIPAL
+    ========================= */
 
-  /* ── Header ── */
-  .yt-header {
-    width: 100%;
-    background: var(--bg-header);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    height: 58px;
-    box-shadow: var(--shadow-xs);
-    margin-bottom: 1.2rem;
-    box-sizing: border-box;
-  }
+    .block-container {
+        padding-top: 1.2rem;
+        padding-bottom: 6rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        max-width: 100%;
+    }
 
-  .yt-header .logo-area {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-  }
+    /* =========================
+       TIPOGRAFÍA
+    ========================= */
 
-  .yt-icon {
-    width: 34px;
-    height: 24px;
-    background: var(--yt-red);
-    border-radius: 7px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 1px 4px rgba(232,0,28,0.25);
-    color: white;
-    font-size: 13px;
-    font-weight: 800;
-  }
+    html, body, [class*="css"] {
+        font-family: "Inter", "Segoe UI", sans-serif;
+    }
 
-  .channel-name {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-primary);
-    letter-spacing: -0.3px;
-    line-height: 1.2;
-  }
+    /* =========================
+       HEADER TIPO YOUTUBE
+    ========================= */
 
-  .channel-sub {
-    font-size: 11px;
-    color: var(--text-muted);
-    font-weight: 400;
-  }
+    .yt-header-wrapper {
+        width: 100%;
+        height: 60px;
 
-  .stat-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--bg-surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 5px 13px;
-    font-size: 12px;
-    color: var(--text-secondary);
-    font-weight: 400;
-    margin-left: 8px;
-  }
+        background: #ffffff;
+        border-bottom: 1px solid #e5e5e5;
 
-  .dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #2BA84A;
-    display: inline-block;
-    animation: pulse 2.4s infinite;
-  }
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%       { opacity: 0.5; transform: scale(0.85); }
-  }
+        padding: 0 1.2rem;
 
-  /* ── Info box ── */
-  .info-box {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: 12px 16px;
-    font-size: 13px;
-    color: var(--text-secondary);
-    box-shadow: var(--shadow-xs);
-    margin-bottom: 1rem;
-  }
+        margin:
+            -1.2rem
+            -2rem
+            1.5rem
+            -2rem;
 
-  .info-box b { color: var(--text-primary); }
+        box-sizing: border-box;
+    }
 
-  /* ── Chips bar ── */
-  .chips-bar {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    padding: 9px 0;
-    overflow-x: auto;
-    scrollbar-width: none;
-    flex-wrap: wrap;
-    margin-bottom: 0.75rem;
-  }
+    .yt-logo {
+        width: 34px;
+        height: 34px;
 
-  .chip-label {
-    font-size: 11.5px;
-    color: var(--text-muted);
-    font-weight: 500;
-    white-space: nowrap;
-  }
+        border-radius: 10px;
 
-  /* ── Chat messages ── */
-  [data-testid="stChatMessage"] {
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-    margin-bottom: 0.75rem;
-  }
+        background: #ff0000;
+        color: white;
 
-  [data-testid="stChatMessageContent"] {
-    background: var(--bg-card) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: 4px var(--radius-lg) var(--radius-lg) var(--radius-lg) !important;
-    box-shadow: var(--shadow-sm) !important;
-    padding: 10px 14px !important;
-    font-size: 13.5px !important;
-    color: var(--text-primary) !important;
-    line-height: 1.62 !important;
-  }
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-  /* Burbuja usuario */
-  [data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) [data-testid="stChatMessageContent"] {
-    background: var(--user-bubble) !important;
-    color: white !important;
-    border-color: var(--user-bubble) !important;
-    border-radius: var(--radius-lg) 4px var(--radius-lg) var(--radius-lg) !important;
-  }
+        font-size: 0.9rem;
+        font-weight: 800;
+    }
 
-  /* ── Chat input ── */
-  .stChatInput > div {
-    background: var(--bg-card) !important;
-    border: 1.5px solid var(--border-dark) !important;
-    border-radius: 22px !important;
-    box-shadow: var(--shadow-xs) !important;
-    padding: 4px 8px 4px 16px !important;
-  }
+    .yt-title {
+        color: #0f0f0f;
+        font-size: 1rem;
+        font-weight: 800;
+        line-height: 1.1;
+    }
 
-  .stChatInput textarea {
-    font-family: var(--font-main) !important;
-    font-size: 14px !important;
-    color: var(--text-primary) !important;
-    background: transparent !important;
-  }
+    .yt-subtitle {
+        color: #6b7280;
+        font-size: 0.72rem;
+        margin-top: 2px;
+    }
 
-  .stChatInput button {
-    background: var(--yt-red) !important;
-    border-radius: 50% !important;
-    border: none !important;
-    box-shadow: 0 2px 6px rgba(232,0,28,0.2) !important;
-  }
+    .yt-pill {
+        background: #ffffff;
 
-  /* ── Botones Streamlit ── */
-  .stButton > button {
-    border-radius: 20px !important;
-    border: 1px solid var(--border-dark) !important;
-    background: var(--bg-card) !important;
-    color: var(--text-secondary) !important;
-    font-family: var(--font-main) !important;
-    font-size: 12px !important;
-    font-weight: 400 !important;
-    padding: 5px 13px !important;
-    box-shadow: var(--shadow-xs) !important;
-    transition: all 0.15s !important;
-  }
+        border: 1px solid #e5e7eb;
 
-  .stButton > button:hover {
-    background: var(--bg-base) !important;
-    border-color: #BBBBBB !important;
-    color: var(--text-primary) !important;
-  }
+        border-radius: 999px;
 
-  /* ── Sidebar ── */
-  [data-testid="stSidebar"] {
-    background-color: var(--bg-sidebar) !important;
-    border-right: 1px solid var(--border) !important;
-  }
+        padding:
+            0.35rem
+            0.8rem;
 
-  [data-testid="stSidebar"] > div:first-child {
-    padding-top: 1rem;
-  }
+        font-size: 0.76rem;
+        font-weight: 500;
 
-  .sidebar-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0 6px 14px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 12px;
-  }
+        color: #4b5563;
 
-  .sb-icon {
-    width: 34px;
-    height: 24px;
-    background: var(--yt-red);
-    border-radius: 7px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 12px;
-    font-weight: 800;
-    flex-shrink: 0;
-  }
+        box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
 
-  .sb-title { font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.2; }
-  .sb-sub   { font-size: 11px; color: var(--text-muted); }
+    /* =========================
+       CAJAS
+    ========================= */
 
-  .sidebar-label {
-    font-size: 10.5px;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.9px;
-    margin: 12px 0 6px 6px;
-  }
+    .info-box {
+        background-color: #ffffff;
 
-  .sidebar-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 8px 8px;
-    border-radius: var(--radius-sm);
-    font-size: 13px;
-    cursor: default;
-    margin-bottom: 2px;
-  }
+        padding: 1rem 1.2rem;
 
-  .sidebar-item:hover { background: rgba(40,40,40,0.06); }
+        border-radius: 18px;
 
-  .qb-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 7px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    flex-shrink: 0;
-    box-shadow: var(--shadow-xs);
-  }
+        border: 1px solid #e5e7eb;
 
-  .qb-label { font-size: 12.5px; font-weight: 500; color: var(--text-primary); }
-  .qb-sub   { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
 
-  .sidebar-divider {
-    height: 1px;
-    background: var(--border);
-    margin: 8px 0;
-  }
+        margin-bottom: 1.2rem;
 
-  .data-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 10px 12px;
-    font-size: 12px;
-    color: var(--text-primary);
-    box-shadow: var(--shadow-xs);
-    margin: 6px 0;
-  }
+        color: #374151;
+    }
 
-  .data-card b { color: var(--text-muted); font-size: 10.5px; display: block; margin-bottom: 2px; }
-  .data-card span {
-    font-family: 'DM Mono', monospace;
-    background: var(--bg-surface);
-    padding: 2px 6px;
-    border-radius: 5px;
-    color: #059669;
-    font-size: 11px;
-  }
+    .small-text {
+        color: #6b7280;
+        font-size: 0.85rem;
+    }
 
-  .sidebar-stats {
-    border-top: 1px solid var(--border);
-    padding: 12px 6px;
-    margin-top: 8px;
-  }
+    /* =========================
+       BOTONES
+    ========================= */
 
-  .mini-stat {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 4px 0;
-    font-size: 12px;
-  }
+    .stButton > button {
+        border-radius: 999px;
 
-  .ms-label { color: var(--text-muted); }
-  .ms-val   { color: var(--text-primary); font-weight: 500; }
-  .ms-val.red { color: var(--yt-red); }
+        border: 1px solid #d1d5db;
 
-  /* ── Video card en respuestas ── */
-  .video-card {
-    display: flex;
-    gap: 10px;
-    background: var(--bg-surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 10px;
-    margin-top: 8px;
-    text-decoration: none;
-    color: inherit;
-    box-shadow: var(--shadow-xs);
-    transition: all 0.15s;
-  }
+        background-color: #ffffff;
 
-  .video-card:hover {
-    border-color: var(--border-dark);
-    background: var(--bg-card);
-    box-shadow: var(--shadow-sm);
-  }
+        color: #374151;
 
-  .vc-thumb {
-    width: 100px;
-    height: 56px;
-    background: var(--border);
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    font-size: 18px;
-    overflow: hidden;
-  }
+        font-weight: 600;
 
-  .vc-thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 5px; }
-  .vc-title { font-size: 12.5px; font-weight: 500; line-height: 1.4; }
-  .vc-tag   { font-size: 10.5px; color: var(--text-muted); }
-  .vc-tag.green { color: #2BA84A; font-weight: 500; }
-  .vc-tag.red   { color: var(--yt-red); }
+        padding:
+            0.45rem
+            0.9rem;
 
-  .metric-row { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+        box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 
-  .metric {
-    background: var(--bg-surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 7px 11px;
-    text-align: center;
-    min-width: 76px;
-  }
+        transition: all 0.2s ease;
+    }
 
-  .metric .m-val   { font-size: 15px; font-weight: 600; color: var(--text-primary); }
-  .metric .m-label { font-size: 9.5px; color: var(--text-muted); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.4px; }
+    .stButton > button:hover {
+        background-color: #f1f1f1;
 
-  /* ── Spinner ── */
-  [data-testid="stSpinner"] { color: var(--yt-red) !important; }
-</style>
-""", unsafe_allow_html=True)
+        border-color: #c7c7c7;
+
+        color: #0f0f0f;
+
+        transform: translateY(-1px);
+    }
+
+    /* =========================
+       CHAT INPUT
+    ========================= */
+
+    .stChatInput textarea {
+        background-color: #ffffff !important;
+
+        color: #0f0f0f !important;
+
+        border-radius: 999px !important;
+
+        border: 1px solid #d1d5db !important;
+
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    /* =========================
+       MENSAJES CHAT
+    ========================= */
+
+    [data-testid="stChatMessage"] {
+        background: transparent;
+    }
+
+    [data-testid="stChatMessageContent"] {
+        color: #0f0f0f;
+    }
+
+    /* =========================
+       OCULTAR STREAMLIT
+    ========================= */
+
+    #MainMenu {
+        visibility: hidden;
+    }
+
+    footer {
+        visibility: hidden;
+    }
+
+    header {
+        visibility: hidden;
+    }
+
+    /* =========================
+       SIDEBAR TIPO YOUTUBE
+    ========================= */
+    
+    [data-testid="stSidebar"] {
+        background-color: #f2f2f2;
+    }
+    
+    [data-testid="stSidebar"] > div:first-child {
+        padding-top: 1rem;
+    }
+    
+    .sidebar-title {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.4rem;
+    }
+    
+    .sidebar-logo {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        background: #ff0000;
+        color: white;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        font-weight: 800;
+    }
+    
+    .sidebar-main-title {
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: #0f0f0f;
+    }
+    
+    .sidebar-subtitle {
+        font-size: 0.72rem;
+        color: #8a8a8a;
+    }
+    
+    .sidebar-section-title {
+        font-size: 0.68rem;
+        font-weight: 800;
+        color: #9ca3af;
+        letter-spacing: 0.08rem;
+        margin: 1rem 0 0.7rem 0;
+    }
+    
+    .sidebar-item {
+        background: transparent;
+        border-radius: 12px;
+        padding: 0.6rem 0.55rem;
+        margin-bottom: 0.25rem;
+        color: #0f0f0f;
+        font-size: 0.82rem;
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        column-gap: 0.45rem;
+        align-items: center;
+    }
+    
+    .sidebar-item:hover {
+        background: #e5e5e5;
+    }
+    
+    .sidebar-item span {
+        font-weight: 700;
+    }
+    
+    .sidebar-item small {
+        grid-column: 2;
+        color: #8a8a8a;
+        font-size: 0.72rem;
+        margin-top: -0.1rem;
+    }
+    
+    .sidebar-divider {
+        height: 1px;
+        background: #dddddd;
+        margin: 1rem 0;
+    }
+    
+    .data-card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 0.75rem;
+        font-size: 0.78rem;
+        color: #0f0f0f;
+    }
+    
+    .data-card div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+        margin-bottom: 0.55rem;
+    }
+    
+    .data-card div:last-child {
+        margin-bottom: 0;
+    }
+    
+    .data-card b {
+        color: #6b7280;
+        font-size: 0.7rem;
+    }
+    
+    .data-card span {
+        font-family: monospace;
+        background: #f3f4f6;
+        padding: 0.15rem 0.35rem;
+        border-radius: 6px;
+        color: #059669;
+    }
+
+    /* =========================
+       WELCOME CARD
+    ========================= */
+    
+    .welcome-card {
+        background: #ffffff;
+    
+        border: 1px solid #e5e7eb;
+    
+        border-radius: 22px;
+    
+        padding: 1.2rem 1.3rem;
+    
+        margin-bottom: 1.4rem;
+    
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    
+    .welcome-top {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .welcome-icon {
+        width: 42px;
+        height: 42px;
+    
+        border-radius: 14px;
+    
+        background: linear-gradient(
+            135deg,
+            #ff0033,
+            #ff4d6d
+        );
+    
+        color: white;
+    
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    
+        font-size: 1rem;
+    
+        flex-shrink: 0;
+    }
+    
+    .welcome-title {
+        font-size: 1rem;
+        font-weight: 800;
+        color: #0f0f0f;
+        margin-bottom: 0.25rem;
+    }
+    
+    .welcome-subtitle {
+        font-size: 0.82rem;
+        line-height: 1.5;
+        color: #6b7280;
+    }
+
+    .welcome-tags-text {
+        margin-top: 1rem;
+        color: #374151;
+        font-size: 0.78rem;
+        font-weight: 600;
+    }
+        
+
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 
 # =========================
 # 5. ENCABEZADO
 # =========================
-st.markdown("""
-<div class="yt-header">
-  <div class="logo-area">
-    <div class="yt-icon">▶</div>
-    <div>
-      <div class="channel-name">Las Damitas Histeria</div>
-      <div class="channel-sub">Agente de análisis · Powered by Gemini</div>
-    </div>
-  </div>
-  <div>
-    <span class="stat-pill"><span class="dot"></span> Gemini conectado</span>
-    <span class="stat-pill">📊 299 videos</span>
-  </div>
-</div>
-""", unsafe_allow_html=True)
+
+st.markdown('<div class="yt-header-wrapper">', unsafe_allow_html=True)
+
+col_logo, col_text, col_status, col_videos = st.columns([0.35, 3, 1, 0.9])
+
+with col_logo:
+    st.markdown('<div class="yt-logo">▶</div>', unsafe_allow_html=True)
+
+with col_text:
+    st.markdown(
+        """
+        <div class="yt-title">Las Damitas Histeria</div>
+        <div class="yt-subtitle">Agente de análisis · Powered by Gemini</div>
+        """,
+        unsafe_allow_html=True
+    )
+
+with col_status:
+    st.markdown('<div class="yt-pill">🟢 Gemini conectado</div>', unsafe_allow_html=True)
+
+with col_videos:
+    st.markdown('<div class="yt-pill">📊 299 videos</div>', unsafe_allow_html=True)
+
+st.markdown('</div>', unsafe_allow_html=True)
+
 
 # =========================
 # 6. SIDEBAR
 # =========================
+
 with st.sidebar:
-    st.markdown("""
-    <div class="sidebar-header">
-      <div class="sb-icon">▶</div>
-      <div>
-        <div class="sb-title">Las Damitas Histeria</div>
-        <div class="sb-sub">Agente YouTube Analytics</div>
-      </div>
-    </div>
+    st.markdown(
+        """
+        <div class="sidebar-title">
+            <span class="sidebar-logo">▶</span>
+            <div>
+                <div class="sidebar-main-title">Las Damitas Histeria</div>
+                <div class="sidebar-subtitle">Agente YouTube Analytics</div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-    <div class="sidebar-label">Accesos rápidos</div>
-    """, unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-section-title">ACCESOS RÁPIDOS</div>', unsafe_allow_html=True)
 
-    # Quick access buttons (functional)
-    quick_questions = [
-        ("🏆", "Top videos",              "Ranking por vistas",      "¿Cuáles son mis 5 videos con más vistas?"),
-        ("📅", "Mejor día para publicar", "Análisis de rendimiento",  "¿Qué días de la semana son mejores para publicar?"),
-        ("🎯", "Temas más exitosos",      "Por engagement",           "¿De qué temas habla más el canal y cuáles tienen más engagement?"),
-        ("📈", "Resumen del canal",        "Stats generales",          "Dame un resumen general del canal con sus estadísticas principales."),
-        ("🎬", "Formatos que funcionan",  "Shorts vs podcasts",       "¿Qué formato de video funciona mejor en el canal?"),
-        ("❤️", "Mayor engagement",        "Likes y comentarios",      "¿Cuáles son mis videos con mayor engagement rate?"),
-    ]
-
-    for icon, label, sublabel, question in quick_questions:
-        col1, col2 = st.columns([0.15, 0.85])
-        with col1:
-            st.markdown(f'<div class="qb-icon">{icon}</div>', unsafe_allow_html=True)
-        with col2:
-            if st.button(label, key=f"quick_{label}", help=sublabel, use_container_width=True):
-                st.session_state["pending_question"] = question
+    st.markdown(
+        """
+        <div class="sidebar-item">🏆 <span>Top videos</span><small>Ranking por vistas</small></div>
+        <div class="sidebar-item">📅 <span>Mejor día para publicar</span><small>Análisis de rendimiento</small></div>
+        <div class="sidebar-item">🎯 <span>Temas más exitosos</span><small>Por engagement</small></div>
+        <div class="sidebar-item">📈 <span>Resumen del canal</span><small>Stats generales</small></div>
+        <div class="sidebar-item">🎬 <span>Formatos que funcionan</span><small>Shorts vs podcasts</small></div>
+        <div class="sidebar-item">💗 <span>Mayor engagement</span><small>Likes y comentarios</small></div>
+        """,
+        unsafe_allow_html=True
+    )
 
     st.markdown('<div class="sidebar-divider"></div>', unsafe_allow_html=True)
 
-    st.markdown("""
-    <div class="sidebar-label">Buscar video</div>
-    """, unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-section-title">PROBAR CONEXIÓN</div>', unsafe_allow_html=True)
 
-    if st.button("🔍  Buscar por tema", use_container_width=True):
-        st.session_state["pending_question"] = "¿En qué episodio hablaron de "
-
-    if st.button("🎥  Analizar video", use_container_width=True):
-        st.session_state["pending_question"] = "Analiza el video: "
-
-    st.markdown('<div class="sidebar-divider"></div>', unsafe_allow_html=True)
-
-    st.markdown("""
-    <div class="sidebar-label">Fuente de datos</div>
-    <div class="data-card">
-      <div><b>Proyecto</b><span>mineria-datos-493000</span></div>
-      <div style="margin-top:6px"><b>Dataset</b><span>youtube</span></div>
-      <div style="margin-top:6px"><b>Tabla</b><span>fact_final</span></div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown('<div class="sidebar-divider"></div>', unsafe_allow_html=True)
-
-    st.markdown('<div class="sidebar-label">Probar conexión</div>', unsafe_allow_html=True)
     if st.button("Probar BigQuery", use_container_width=True):
         with st.spinner("Verificando conexión con BigQuery..."):
             try:
                 info = retriever.test_connection()
                 st.success("✅ Conexión exitosa")
+
                 st.write("**Tabla:**", info["tabla"])
                 st.write("**Filas:**", info["filas"])
                 st.write("**Columnas:**", info["columnas"])
+
             except Exception as e:
                 st.error("❌ No se pudo conectar con BigQuery.")
                 st.exception(e)
 
     st.markdown('<div class="sidebar-divider"></div>', unsafe_allow_html=True)
 
-    if st.button("🗑️  Limpiar conversación", use_container_width=True):
+    if st.button("Limpiar conversación", use_container_width=True):
         st.session_state.messages = []
         st.rerun()
 
-    # Stats panel
-    st.markdown("""
-    <div class="sidebar-stats">
-      <div class="sidebar-label">Canal al día</div>
-      <div class="mini-stat"><span class="ms-label">Videos</span><span class="ms-val">299</span></div>
-      <div class="mini-stat"><span class="ms-label">Views totales</span><span class="ms-val">16.7M</span></div>
-      <div class="mini-stat"><span class="ms-label">Likes totales</span><span class="ms-val">716K</span></div>
-      <div class="mini-stat"><span class="ms-label">Comentarios</span><span class="ms-val">34.8K</span></div>
-      <div class="mini-stat"><span class="ms-label">Estado del agente</span><span class="ms-val red">● Activo</span></div>
-    </div>
-    """, unsafe_allow_html=True)
 
 # =========================
-# 7. CHIPS / FILTROS RÁPIDOS
+# 7. MENSAJE INFORMATIVO
 # =========================
-st.markdown("""
-<div class="info-box">
-  <b>¿Qué puede hacer este agente?</b><br>
-  Puede responder sobre videos, métricas, temas, transcripciones, ranking de contenido,
-  recomendaciones y predicciones de rendimiento del canal.
-</div>
-""", unsafe_allow_html=True)
 
-st.markdown('<div class="chips-bar"><span class="chip-label">Filtrar:</span>', unsafe_allow_html=True)
-chip_cols = st.columns(7)
-chips = [
-    ("📱 Shorts",        "Muéstrame solo los Shorts del canal ordenados por vistas."),
-    ("🎙️ Podcasts",      "Muéstrame los episodios de podcast ordenados por vistas."),
-    ("📅 2024",          "¿Cuáles son los mejores videos del 2024?"),
-    ("📅 2023",          "¿Cuáles son los mejores videos del 2023?"),
-    ("⚡ Cortos",         "Muéstrame los videos más cortos ordenados por engagement."),
-    ("⏳ Largos",         "Muéstrame los videos más largos con más views."),
-    ("💬 Comentarios",   "¿Qué videos tienen más comentarios?"),
-]
-for idx, (label, question) in enumerate(chips):
-    with chip_cols[idx]:
-        if st.button(label, key=f"chip_{idx}", use_container_width=True):
-            st.session_state["pending_question"] = question
-st.markdown('</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="welcome-card"><div class="welcome-top"><div class="welcome-icon">✨</div><div><div class="welcome-title">¿Qué puede hacer este agente?</div><div class="welcome-subtitle">Consulta métricas, rendimiento, temas, transcripciones y recomendaciones del canal usando lenguaje natural.</div></div></div><div class="welcome-tags-text">📊 Analytics &nbsp;&nbsp; 🎬 Videos &nbsp;&nbsp; 🔥 Engagement &nbsp;&nbsp; 🧠 Gemini AI &nbsp;&nbsp; 📈 Predicciones</div></div>',
+    unsafe_allow_html=True
+)
+
 
 # =========================
 # 8. MEMORIA DE CONVERSACIÓN
 # =========================
+
 if "messages" not in st.session_state:
     st.session_state.messages = [
         {
             "role": "assistant",
             "content": (
-                "Hola 👋 Soy tu agente de análisis de YouTube para **Las Damitas Histeria**. "
-                "Puedo analizar el rendimiento del canal, encontrar en qué episodio hablaron de "
-                "un tema, decirte los mejores días para publicar y mucho más. "
-                "¡Pregúntame lo que necesites!"
+                "Hola 👋 Soy tu agente de análisis de YouTube. "
+                "Puedes preguntarme sobre métricas, videos, temas, transcripciones "
+                "y recomendaciones del canal."
             )
         }
     ]
 
+
 # =========================
 # 9. MOSTRAR HISTORIAL
 # =========================
+
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
-        st.markdown(message["content"], unsafe_allow_html=True)
+        st.markdown(message["content"])
+
 
 # =========================
-# 10. MANEJAR PREGUNTA RÁPIDA (sidebar / chips)
+# 10. CAPTURAR PREGUNTA DEL USUARIO
 # =========================
-pending = st.session_state.pop("pending_question", None)
 
-# =========================
-# 11. CAPTURAR PREGUNTA DEL USUARIO
-# =========================
 prompt = st.chat_input(
-    "Pregunta sobre el canal… ej: ¿De qué hablaron en el episodio 40?"
+    "Ej: ¿Qué temas tienen mejor interacción en el canal?"
 )
 
-# Usar pregunta pendiente o del input
-active_prompt = pending or prompt
+if prompt:
+    # Mostrar mensaje del usuario
+    st.chat_message("user").markdown(prompt)
 
-if active_prompt:
-    st.chat_message("user").markdown(active_prompt)
-    st.session_state.messages.append({"role": "user", "content": active_prompt})
+    st.session_state.messages.append(
+        {
+            "role": "user",
+            "content": prompt
+        }
+    )
 
+    # Generar respuesta del agente
     with st.chat_message("assistant"):
-        with st.spinner("Consultando BigQuery y generando respuesta…"):
+        with st.spinner("Consultando BigQuery y generando respuesta..."):
             try:
-                respuesta_texto = agent.answer(active_prompt)
-                st.markdown(respuesta_texto, unsafe_allow_html=True)
-                st.session_state.messages.append({"role": "assistant", "content": respuesta_texto})
+                respuesta_texto = agent.answer(prompt)
+
+                st.markdown(respuesta_texto)
+
+                st.session_state.messages.append(
+                    {
+                        "role": "assistant",
+                        "content": respuesta_texto
+                    }
+                )
+
             except Exception as e:
                 mensaje_error = (
                     "**Ocurrió un error al procesar tu pregunta:**\n\n"
@@ -645,9 +628,13 @@ if active_prompt:
                     "Revisa que tus Secrets estén configurados correctamente "
                     "y que la cuenta de servicio tenga permisos para BigQuery."
                 )
+
                 st.error(mensaje_error)
                 st.exception(e)
-                st.session_state.messages.append({"role": "assistant", "content": mensaje_error})
 
-    if pending:
-        st.rerun()
+                st.session_state.messages.append(
+                    {
+                        "role": "assistant",
+                        "content": mensaje_error
+                    }
+                )
