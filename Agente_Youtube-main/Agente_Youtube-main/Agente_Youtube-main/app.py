@@ -167,160 +167,70 @@ st.markdown("""
 # =========================
 
 st.markdown("""
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-
 <style>
-
-/* Ocultar el header nativo de Streamlit */
-header[data-testid="stHeader"] {
-    display: none !important;
-}
-
-/* Quitar el padding superior del contenedor principal */
-.block-container {
-    padding-top: 0 !important;
-}
-
-/* El topbar se ancla arriba usando posición fija */
-.yt-topbar-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 999;
-    background: #ffffff;
-    border-bottom: 1px solid #e5e5e5;
-    padding: 10px 24px;
+.yt-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    height: 56px;
-    box-sizing: border-box;
+    gap: 12px;
+    padding: 14px 0 18px 0;
+    border-bottom: 2px solid #ff0000;
+    margin-bottom: 20px;
 }
-
-/* Espaciador para que el contenido no quede debajo del topbar fijo */
-.yt-topbar-spacer {
-    height: 56px;
-    width: 100%;
-}
-
-.yt-topbar-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.yt-topbar-logo {
-    width: 32px;
-    height: 32px;
+.yt-header-logo {
+    width: 36px;
+    height: 36px;
     background: #ff0000;
-    border-radius: 7px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
 }
-.yt-topbar-logo svg { width: 17px; height: 17px; fill: white; }
-
-.yt-topbar-channel { font-size: 13px; font-weight: 600; color: #111; line-height: 1.3; font-family: 'Segoe UI', sans-serif; }
-.yt-topbar-powered  { font-size: 11px; color: #888; line-height: 1.3; font-family: 'Segoe UI', sans-serif; }
-
-.yt-topbar-right {
+.yt-header-logo svg { width: 20px; height: 20px; fill: white; }
+.yt-header-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f0f0f;
+    line-height: 1.2;
+}
+.yt-header-sub {
+    font-size: 12px;
+    color: #888;
+    margin-top: 2px;
+}
+.yt-header-badge {
+    margin-left: auto;
     display: flex;
     align-items: center;
-    gap: 8px;
-}
-
-.yt-topbar-pill {
-    display: inline-flex;
-    align-items: center;
     gap: 6px;
+    font-size: 12px;
+    color: #555;
+    background: #f2f2f2;
     padding: 5px 12px;
     border-radius: 20px;
-    border: 1px solid #e0e0e0;
-    font-size: 12px;
-    color: #444;
-    background: #fafafa;
-    white-space: nowrap;
-    font-family: 'Segoe UI', sans-serif;
 }
-
-.dot-green {
+.yt-header-badge .dot {
     width: 7px; height: 7px;
     border-radius: 50%;
     background: #22c55e;
     display: inline-block;
-    flex-shrink: 0;
 }
-
-.yt-topbar-clear {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 5px 14px;
-    border-radius: 20px;
-    border: 1px solid #e0e0e0;
-    font-size: 12px;
-    color: #444;
-    background: #fafafa;
-    white-space: nowrap;
-    font-family: 'Segoe UI', sans-serif;
-    cursor: pointer;
-}
-.yt-topbar-clear:hover { background: #f0f0f0; }
-
-.yt-topbar-avatar {
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    background: #cc0000;
-    color: white;
-    font-size: 11px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-left: 4px;
-    font-family: 'Segoe UI', sans-serif;
-}
-
 </style>
 
-<!-- TOPBAR FIJO -->
-<div class="yt-topbar-wrapper">
-
-    <div class="yt-topbar-left">
-        <div class="yt-topbar-logo">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M19.59 7a2.5 2.5 0 0 0-1.76-1.76C16.46 5 12 5 12 5s-4.46 0-5.83.24A2.5 2.5 0 0 0 4.41 7 26 26 0 0 0 4.17 12a26 26 0 0 0 .24 5 2.5 2.5 0 0 0 1.76 1.76C7.54 19 12 19 12 19s4.46 0 5.83-.24A2.5 2.5 0 0 0 19.59 17 26 26 0 0 0 19.83 12a26 26 0 0 0-.24-5zM10 15v-6l5 3-5 3z"/>
-            </svg>
-        </div>
-        <div>
-            <div class="yt-topbar-channel">Las Damitas Histeria</div>
-            <div class="yt-topbar-powered">Agente de análisis · Powered by Gemini</div>
-        </div>
+<div class="yt-header">
+    <div class="yt-header-logo">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19.59 7a2.5 2.5 0 0 0-1.76-1.76C16.46 5 12 5 12 5s-4.46 0-5.83.24A2.5 2.5 0 0 0 4.41 7 26 26 0 0 0 4.17 12a26 26 0 0 0 .24 5 2.5 2.5 0 0 0 1.76 1.76C7.54 19 12 19 12 19s4.46 0 5.83-.24A2.5 2.5 0 0 0 19.59 17 26 26 0 0 0 19.83 12a26 26 0 0 0-.24-5zM10 15v-6l5 3-5 3z"/>
+        </svg>
     </div>
-
-    <div class="yt-topbar-right">
-        <div class="yt-topbar-pill">
-            <span class="dot-green"></span>
-            Gemini conectado
-        </div>
-        <div class="yt-topbar-pill">
-            <i class="ti ti-brand-youtube" style="color:#ff0000; font-size:14px;"></i>
-            299 videos
-        </div>
-        <div class="yt-topbar-clear">Limpiar chat</div>
-        <div class="yt-topbar-avatar">LDH</div>
+    <div>
+        <div class="yt-header-title">Las Damitas Histeria</div>
+        <div class="yt-header-sub">Agente de análisis · Powered by Gemini</div>
     </div>
-
+    <div class="yt-header-badge">
+        <span class="dot"></span> Gemini conectado
+    </div>
 </div>
-
-<!-- Espaciador para que el contenido no quede debajo del topbar -->
-<div class="yt-topbar-spacer"></div>
-
 """, unsafe_allow_html=True)
-
 
 # =========================
 # SIDEBAR TIPO YOUTUBE
