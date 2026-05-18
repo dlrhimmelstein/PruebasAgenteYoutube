@@ -9,9 +9,10 @@ import streamlit as st
 # =========================
 # Debe ser el primer comando de Streamlit.
 st.set_page_config(
-    page_title="Agente YouTube Analytics",
-    page_icon="📊",
-    layout="centered"
+    page_title="Las Damitas Histeria | Agente YouTube",
+    page_icon="▶️",
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 
