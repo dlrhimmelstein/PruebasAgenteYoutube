@@ -9,6 +9,10 @@ Original file is located at
 
 """#**INICIAL**"""
 
+import os
+# Ruta al JSON
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "service-account-key.json"
+
 PROJECT_ID = "mineria-datos-493000"
 DATASET_ID = "youtube"
 TABLE_NAME = "fact_final"
