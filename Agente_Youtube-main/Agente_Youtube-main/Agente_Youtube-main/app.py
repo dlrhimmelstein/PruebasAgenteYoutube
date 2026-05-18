@@ -658,28 +658,26 @@ st.markdown(
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Bienvenida inicial
 if len(st.session_state.messages) == 0:
-    st.markdown("""
-    <div class="empty-welcome">
 
-        <div class="empty-logo">
-            ▶
-        </div>
+    welcome_html = """
+    <div class='empty-welcome'>
+        <div class='empty-logo'>▶</div>
 
-        <div class="empty-title">
+        <div class='empty-title'>
             Hola, soy tu agente de YouTube
         </div>
 
-        <div class="empty-text">
+        <div class='empty-text'>
             Puedo analizar el rendimiento de <b>Las Damitas Histeria</b>,
             encontrar en qué episodio hablaron de un tema,
             decirte los mejores días para publicar y mucho más.
             ¡Pregúntame lo que necesites!
         </div>
-
     </div>
-    """, unsafe_allow_html=True)
+    """
+
+    st.markdown(welcome_html, unsafe_allow_html=True)
 
 
 # =========================
