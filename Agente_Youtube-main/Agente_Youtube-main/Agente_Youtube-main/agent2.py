@@ -922,8 +922,32 @@ def filters_from_plan(plan: dict[str, Any]) -> SearchFilters:
     )
 
 
+MAX_TRANSCRIPT_IN_CONTEXT = 400  # caracteres máx de transcripcion_video en el contexto de Gemini
+
+
+def _truncate_transcripts(obj: Any, max_chars: int = MAX_TRANSCRIPT_IN_CONTEXT) -> Any:
+    """
+    Recorre recursivamente dicts y listas y trunca el campo
+    'transcripcion_video' para que no infle el prompt de Gemini.
+    La transcripción completa ya fue procesada por el vector store;
+    aquí solo se necesita como referencia breve.
+    """
+    if isinstance(obj, dict):
+        result = {}
+        for k, v in obj.items():
+            if k == "transcripcion_video" and isinstance(v, str) and len(v) > max_chars:
+                result[k] = v[:max_chars] + "…[truncado]"
+            else:
+                result[k] = _truncate_transcripts(v, max_chars)
+        return result
+    if isinstance(obj, list):
+        return [_truncate_transcripts(item, max_chars) for item in obj]
+    return obj
+
+
 def compact_context(context: dict[str, Any], max_chars: int = MAX_CONTEXT_CHARS) -> str:
-    return json.dumps(context, ensure_ascii=False, default=json_default)[:max_chars]
+    safe_context = _truncate_transcripts(context)
+    return json.dumps(safe_context, ensure_ascii=False, default=json_default)[:max_chars]
 
 
 def generate_final_answer(
