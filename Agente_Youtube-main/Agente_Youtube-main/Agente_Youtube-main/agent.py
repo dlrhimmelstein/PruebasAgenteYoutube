@@ -350,14 +350,12 @@ class BigQueryYouTubeRetriever:
             term_clauses = []
             for idx, term in enumerate(terms[:8]):
                 name = f"term_{idx}"
-                # Se elimina tema_legible del CONCAT para que la búsqueda léxica
-                # de BigQuery clasifique por contenido real (título, descripción,
-                # transcripción) y no por la categoría asignada por YouTube.
                 term_clauses.append(f"""
                 LOWER(CONCAT(
                   IFNULL(titulo_video, ''), ' ',
                   IFNULL(descripcion_video, ''), ' ',
                   IFNULL(transcripcion_video, ''), ' ',
+                  IFNULL(tema_legible, ''), ' ',
                   IFNULL(descripcion_segmento, '')
                 )) LIKE @{name}
                 """)
@@ -512,11 +510,9 @@ def segment_transcript(
 
         start_seconds = (start_word / total_words) * duration_seconds if duration_seconds else 0
         end_seconds = (end_word / total_words) * duration_seconds if duration_seconds else 0
-        # search_blob se usa para el boost léxico en semantic_search_segments.
-        # Se excluye tema_legible para que la clasificación se base en el contenido
-        # real de la transcripción y no en la categoría asignada por YouTube.
         search_blob = " ".join([
             str(video.get("titulo_video") or ""),
+            str(video.get("tema_legible") or ""),
             str(video.get("descripcion_segmento") or ""),
             segment_text,
         ])
@@ -611,11 +607,9 @@ def build_vector_store(retriever: BigQueryYouTubeRetriever) -> list[dict[str, An
 
     for i in range(0, len(segments), EMBEDDING_BATCH_SIZE):
         batch_segments = segments[i:i + EMBEDDING_BATCH_SIZE]
-        # El texto a embedear se basa únicamente en título, descripción y transcripción.
-        # Se elimina "Tema clasificado" (tema_legible de YouTube) para que los embeddings
-        # reflejen el contenido real hablado en el video y no la categoría externa.
         texts = [
             f"Titulo: {s['titulo_video']}\n"
+            f"Tema clasificado: {s.get('tema_legible')}\n"
             f"Descripcion: {s.get('descripcion_segmento')}\n"
             f"Fragmento de transcripcion: {s['segment_text']}"
             for s in batch_segments
