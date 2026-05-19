@@ -167,8 +167,7 @@ def gemini_generate(prompt, temperature=0.2, max_retries=2):
 
 """
 
-VECTOR_STORE_PATH = "/content/youtube_transcript_vector_store.pkl"
-PARTIAL_VECTOR_STORE_PATH = "youtube_transcript_vector_store_partial.pkl"
+
 
 EMBEDDING_BATCH_SIZE = 10
 EMBEDDING_ITEMS_PER_MINUTE = 80
@@ -397,15 +396,29 @@ if segments:
 """crear o reanudar vector store"""
 
 def build_vector_store_safe(segments, force_rebuild=False, max_segments=None):
+
     if os.path.exists(VECTOR_STORE_PATH) and not force_rebuild:
         print("Cargando vector store completo desde archivo...")
-        with open(VECTOR_STORE_PATH, "rb") as f:
-            return pickle.load(f)
+
+        try:
+            with open(VECTOR_STORE_PATH, "rb") as f:
+                return pickle.load(f)
+
+        except (EOFError, FileNotFoundError, pickle.UnpicklingError):
+            print("Vector store completo corrupto. Reconstruyendo...")
+
+
 
     if os.path.exists(PARTIAL_VECTOR_STORE_PATH) and not force_rebuild:
         print("Cargando progreso parcial...")
-        with open(PARTIAL_VECTOR_STORE_PATH, "rb") as f:
-            vector_store = pickle.load(f)
+
+        try:
+            with open(PARTIAL_VECTOR_STORE_PATH, "rb") as f:
+                vector_store = pickle.load(f)
+
+        except (EOFError, FileNotFoundError, pickle.UnpicklingError):
+            print("Vector store parcial corrupto. Reiniciando...")
+            vector_store = None
     else:
         vector_store = []
 
