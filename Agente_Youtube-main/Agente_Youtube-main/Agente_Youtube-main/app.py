@@ -46,7 +46,7 @@ if "gcp_service_account" not in st.secrets:
 # =========================
 
 try:
-    from agent import agent, rebuild_semantic_index, retriever
+    from agent import agent
 except Exception as e:
     st.error("Error al importar el agente desde agent.py.")
     st.exception(e)
