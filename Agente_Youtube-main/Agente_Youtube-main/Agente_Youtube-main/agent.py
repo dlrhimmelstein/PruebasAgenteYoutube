@@ -167,7 +167,7 @@ def gemini_generate(prompt, temperature=0.2, max_retries=2):
 """
 
 VECTOR_STORE_PATH = "/content/youtube_transcript_vector_store.pkl"
-PARTIAL_VECTOR_STORE_PATH = "/content/youtube_transcript_vector_store_partial.pkl"
+PARTIAL_VECTOR_STORE_PATH = "youtube_transcript_vector_store_partial.pkl"
 
 EMBEDDING_BATCH_SIZE = 10
 EMBEDDING_ITEMS_PER_MINUTE = 80
